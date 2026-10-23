@@ -6,9 +6,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">Dedicated Emails</h3>
+            <h3 className="text-xl font-bold mb-4">Dedicated Emailing</h3>
             <p style={{ color: '#A5F3FC' }}>
-              Professional email solutions for your business needs.
+              The employee communications platform that helps HR, People Ops, and leadership manage company-wide communications.
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-4 mt-4">
@@ -29,12 +29,12 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Product</h4>
+            <h4 className="font-semibold mb-4">Platform</h4>
             <ul className="space-y-2">
+              <li><Link href="/product-demo" style={{ color: '#A5F3FC' }} className="hover:text-white">Features</Link></li>
+              <li><Link href="/compare" style={{ color: '#A5F3FC' }} className="hover:text-white">Solutions</Link></li>
               <li><Link href="/about" style={{ color: '#A5F3FC' }} className="hover:text-white">About</Link></li>
-              <li><Link href="/compare" style={{ color: '#A5F3FC' }} className="hover:text-white">Compare</Link></li>
-              <li><Link href="/signup" style={{ color: '#A5F3FC' }} className="hover:text-white">Sign Up</Link></li>
-              <li><Link href="/demo" style={{ color: '#A5F3FC' }} className="hover:text-white">Book a Demo</Link></li>
+              <li><Link href="/contact" style={{ color: '#A5F3FC' }} className="hover:text-white">Contact</Link></li>
             </ul>
           </div>
           <div>
@@ -42,7 +42,8 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/privacy" style={{ color: '#A5F3FC' }} className="hover:text-white">Privacy Policy</Link></li>
               <li><Link href="/terms" style={{ color: '#A5F3FC' }} className="hover:text-white">Terms of Service</Link></li>
-              <li><Link href="/contact" style={{ color: '#A5F3FC' }} className="hover:text-white">Contact Us</Link></li>
+              <li><Link href="/signup" style={{ color: '#A5F3FC' }} className="hover:text-white">Sign Up</Link></li>
+              <li><Link href="/demo" style={{ color: '#A5F3FC' }} className="hover:text-white">Book a Demo</Link></li>
             </ul>
           </div>
           <div>
@@ -53,7 +54,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 text-center" style={{ borderTop: '1px solid #0891B2', color: '#A5F3FC' }}>
-          <p>&copy; 2026 Dedicated Emails. All rights reserved.</p>
+          <p>&copy; 2026 Dedicated Emailing. All rights reserved.</p>
         </div>
       </div>
     </footer>

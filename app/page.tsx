@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Star, Shield, Zap, BarChart3, Mail, Users, ShoppingCart, Building2, Headphones, CheckCircle, ArrowRight, AlertTriangle, FileCheck, Activity } from 'lucide-react';
+import { Bell, Shield, Zap, BarChart3, Mail, Users, Building2, Megaphone, CheckCircle, ArrowRight, MessageSquare, Calendar, Lock, ChevronRight, Eye, FileText, Send, TrendingUp, AlertCircle, Settings, Home, Inbox, PieChart } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -9,8 +9,7 @@ export default function HomePage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="py-24 relative overflow-hidden" style={{ backgroundColor: '#ECFEFF' }}>
-        {/* Background decoration */}
+      <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#ECFEFF' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full opacity-20" style={{ backgroundColor: '#0891B2' }} />
           <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full opacity-10" style={{ backgroundColor: '#0891B2' }} />
@@ -18,43 +17,41 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-6" style={{ backgroundColor: '#CFFAFE', color: '#0891B2' }}>
-              <Shield className="w-4 h-4" />
-              Email Delivery & Compliance Monitoring
+              <Bell className="w-4 h-4" />
+              Employee Communications Platform
             </div>
-            <h1 className="text-5xl font-extrabold sm:text-6xl md:text-7xl" style={{ color: '#1F2937' }}>
-              Deliver More. Comply Better.
-              <span className="block" style={{ color: '#0891B2' }}>Monitor Everything.</span>
+            <h1 className="text-5xl font-extrabold sm:text-6xl" style={{ color: '#1F2937' }}>
+              The smarter way to keep
+              <span className="block" style={{ color: '#0891B2' }}>your entire team informed.</span>
             </h1>
             <p className="mt-6 max-w-2xl mx-auto text-xl" style={{ color: '#6B7280' }}>
-              Dedicated Emails is the platform for businesses that need reliable email delivery with built-in compliance monitoring — CAN-SPAM, GDPR, and carrier regulations, all in one place.
+              Centralize announcements, company updates, and employee communications in one platform — with delivery tracking, engagement analytics, and acknowledgment confirmation built in.
             </p>
-            {/* Stats row */}
-            <div className="mt-10 flex justify-center gap-12 flex-wrap">
-              <div className="text-center">
-                <div className="text-3xl font-bold" style={{ color: '#0891B2' }}>99.9%</div>
-                <div className="text-sm mt-1" style={{ color: '#6B7280' }}>Delivery Rate</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold" style={{ color: '#0891B2' }}>100%</div>
-                <div className="text-sm mt-1" style={{ color: '#6B7280' }}>Compliance Coverage</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold" style={{ color: '#0891B2' }}>Real-Time</div>
-                <div className="text-sm mt-1" style={{ color: '#6B7280' }}>Violation Alerts</div>
-              </div>
+            {/* Value props row */}
+            <div className="mt-8 flex justify-center gap-8 flex-wrap">
+              {[
+                { label: 'Delivery Tracking', icon: <Send className="w-4 h-4" /> },
+                { label: 'Read Acknowledgments', icon: <CheckCircle className="w-4 h-4" /> },
+                { label: 'Engagement Analytics', icon: <BarChart3 className="w-4 h-4" /> },
+              ].map((v) => (
+                <div key={v.label} className="flex items-center gap-2 text-sm font-semibold" style={{ color: '#0891B2' }}>
+                  {v.icon}
+                  {v.label}
+                </div>
+              ))}
             </div>
-            <div className="mt-10 flex justify-center gap-4 flex-wrap">
-              <Link href="/signup" className="px-8 py-4 text-white text-lg font-semibold rounded-lg shadow-lg transition-opacity hover:opacity-90" style={{ backgroundColor: '#0891B2' }}>
-                Start Free Trial
-              </Link>
-              <Link href="/demo" className="px-8 py-4 text-lg font-semibold rounded-lg transition-opacity hover:opacity-90 border-2" style={{ color: '#0891B2', borderColor: '#0891B2', backgroundColor: '#FFFFFF' }}>
+            <div className="mt-8 flex justify-center gap-4 flex-wrap">
+              <Link href="/demo" className="px-8 py-4 text-white text-lg font-semibold rounded-lg shadow-lg transition-opacity hover:opacity-90" style={{ backgroundColor: '#0891B2' }}>
                 Book a Demo
+              </Link>
+              <Link href="/signup" className="px-8 py-4 text-lg font-semibold rounded-lg transition-opacity hover:opacity-90 border-2" style={{ color: '#0891B2', borderColor: '#0891B2', backgroundColor: '#FFFFFF' }}>
+                Start Free Trial
               </Link>
             </div>
           </div>
 
-          {/* Mock compliance dashboard visual */}
-          <div className="mt-16 max-w-4xl mx-auto">
+          {/* Sophisticated Dashboard Mockup */}
+          <div className="mt-14 max-w-5xl mx-auto">
             <div className="rounded-2xl shadow-2xl overflow-hidden border" style={{ borderColor: '#0891B233' }}>
               {/* Browser chrome */}
               <div className="flex items-center gap-2 px-4 py-3" style={{ backgroundColor: '#164E63' }}>
@@ -62,39 +59,85 @@ export default function HomePage() {
                 <div className="w-3 h-3 rounded-full bg-yellow-400" />
                 <div className="w-3 h-3 rounded-full bg-green-400" />
                 <div className="ml-4 flex-1 rounded px-3 py-1 text-xs" style={{ backgroundColor: '#0E3A4A', color: '#A5F3FC' }}>
-                  app.dedicatedemails.com/compliance
+                  app.dedicatedemailing.com/dashboard
                 </div>
               </div>
-              {/* Dashboard content */}
-              <div className="p-6" style={{ backgroundColor: '#F8FFFE' }}>
-                <div className="grid grid-cols-4 gap-4 mb-6">
+              {/* App shell with sidebar */}
+              <div className="flex" style={{ backgroundColor: '#F8FFFE', minHeight: '380px' }}>
+                {/* Left sidebar */}
+                <div className="w-48 flex-shrink-0 border-r py-4 px-3" style={{ backgroundColor: '#FFFFFF', borderColor: '#E5E7EB' }}>
+                  <div className="text-xs font-bold uppercase tracking-widest mb-4 px-2" style={{ color: '#9CA3AF' }}>Platform</div>
                   {[
-                    { label: 'Delivered', value: '99.1%', color: '#10B981' },
-                    { label: 'Compliant', value: '100%', color: '#0891B2' },
-                    { label: 'Violations', value: '0', color: '#10B981' },
-                    { label: 'Alerts', value: '2', color: '#F59E0B' },
-                  ].map((stat) => (
-                    <div key={stat.label} className="rounded-xl p-4 text-center" style={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB' }}>
-                      <div className="text-2xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
-                      <div className="text-xs mt-1" style={{ color: '#6B7280' }}>{stat.label}</div>
+                    { icon: <Home className="w-4 h-4" />, label: 'Dashboard', active: true },
+                    { icon: <Send className="w-4 h-4" />, label: 'Campaigns' },
+                    { icon: <Inbox className="w-4 h-4" />, label: 'Announcements' },
+                    { icon: <Users className="w-4 h-4" />, label: 'Employees' },
+                    { icon: <PieChart className="w-4 h-4" />, label: 'Analytics' },
+                    { icon: <CheckCircle className="w-4 h-4" />, label: 'Acknowledgments' },
+                    { icon: <Settings className="w-4 h-4" />, label: 'Settings' },
+                  ].map((item) => (
+                    <div key={item.label} className={`flex items-center gap-2 px-2 py-2 rounded-lg mb-1 text-sm ${item.active ? 'font-semibold' : ''}`}
+                      style={{ backgroundColor: item.active ? '#CFFAFE' : 'transparent', color: item.active ? '#0891B2' : '#6B7280' }}>
+                      {item.icon}
+                      {item.label}
                     </div>
                   ))}
                 </div>
-                {/* Compliance status rows */}
-                <div className="rounded-xl p-4" style={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB' }}>
-                  <div className="text-sm font-semibold mb-3" style={{ color: '#1F2937' }}>Compliance Status — Active Campaigns</div>
-                  <div className="space-y-2">
+                {/* Main content */}
+                <div className="flex-1 p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <div className="text-base font-bold" style={{ color: '#1F2937' }}>Communications Dashboard</div>
+                      <div className="text-xs" style={{ color: '#9CA3AF' }}>October 2026 · All Departments</div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white" style={{ backgroundColor: '#0891B2' }}>
+                        + Create Announcement
+                      </div>
+                    </div>
+                  </div>
+                  {/* Metrics row */}
+                  <div className="grid grid-cols-4 gap-3 mb-4">
                     {[
-                      { name: 'CAN-SPAM Headers', status: 'Pass', color: '#10B981' },
-                      { name: 'Unsubscribe Link Present', status: 'Pass', color: '#10B981' },
-                      { name: 'DKIM Signature', status: 'Pass', color: '#10B981' },
-                      { name: 'Sender ID Verified', status: 'Warning', color: '#F59E0B' },
-                    ].map((row) => (
-                      <div key={row.name} className="flex items-center justify-between py-1 border-b last:border-0" style={{ borderColor: '#F3F4F6' }}>
-                        <span className="text-sm" style={{ color: '#374151' }}>{row.name}</span>
-                        <span className="text-xs font-semibold px-2 py-1 rounded-full" style={{ color: row.color, backgroundColor: row.color + '20' }}>{row.status}</span>
+                      { label: 'Delivery Rate', value: '98.7%', change: '+1.2%', color: '#10B981' },
+                      { label: 'Open Rate', value: '71%', change: '+4%', color: '#0891B2' },
+                      { label: 'Acknowledgment Rate', value: '89%', change: '+6%', color: '#0891B2' },
+                      { label: 'Active Campaigns', value: '4', change: '2 scheduled', color: '#F59E0B' },
+                    ].map((stat) => (
+                      <div key={stat.label} className="rounded-xl p-3" style={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB' }}>
+                        <div className="text-xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
+                        <div className="text-xs mt-0.5" style={{ color: '#6B7280' }}>{stat.label}</div>
+                        <div className="text-xs mt-1 font-medium" style={{ color: '#10B981' }}>{stat.change}</div>
                       </div>
                     ))}
+                  </div>
+                  {/* Campaigns table */}
+                  <div className="rounded-xl overflow-hidden" style={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB' }}>
+                    <div className="flex items-center justify-between px-4 py-2.5 border-b" style={{ borderColor: '#F3F4F6' }}>
+                      <div className="text-sm font-semibold" style={{ color: '#1F2937' }}>Recent Campaigns</div>
+                      <div className="text-xs" style={{ color: '#0891B2' }}>View all →</div>
+                    </div>
+                    <div className="divide-y" style={{ borderColor: '#F3F4F6' }}>
+                      {[
+                        { name: 'Q4 All-Hands Meeting — Oct 28', dept: 'All Employees', sent: '1,240', opened: '71%', ack: '89%', status: 'Sent', statusColor: '#10B981' },
+                        { name: 'Open Enrollment Reminder', dept: 'HR · Benefits', sent: '1,240', opened: '68%', ack: '94%', status: 'Sent', statusColor: '#10B981' },
+                        { name: 'Office Closure — Nov 11', dept: 'All Employees', sent: '—', opened: '—', ack: '—', status: 'Scheduled', statusColor: '#0891B2' },
+                        { name: 'IT Security Policy Update', dept: 'All Employees', sent: '—', opened: '—', ack: '—', status: 'Draft', statusColor: '#F59E0B' },
+                      ].map((row) => (
+                        <div key={row.name} className="grid grid-cols-5 items-center px-4 py-2.5 text-xs">
+                          <div className="col-span-2">
+                            <div className="font-medium" style={{ color: '#374151' }}>{row.name}</div>
+                            <div style={{ color: '#9CA3AF' }}>{row.dept}</div>
+                          </div>
+                          <div style={{ color: '#6B7280' }}>{row.sent} sent</div>
+                          <div style={{ color: '#6B7280' }}>{row.opened} opened</div>
+                          <div className="flex items-center justify-between">
+                            <span style={{ color: '#6B7280' }}>{row.ack} ack</span>
+                            <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ color: row.statusColor, backgroundColor: row.statusColor + '20' }}>{row.status}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -103,12 +146,48 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Social Proof / Logos */}
-      <section className="py-12 border-y" style={{ borderColor: '#E5E7EB' }}>
+      {/* Why Not Just Use Email Section */}
+      <section className="py-16 border-y" style={{ borderColor: '#E5E7EB', backgroundColor: '#FFFFFF' }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-bold" style={{ color: '#1F2937' }}>Why not just use Outlook or Gmail?</h2>
+            <p className="mt-3 text-lg" style={{ color: '#6B7280' }}>Regular email lets you send announcements. Dedicated Emailing lets you <em>manage</em> them.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                title: 'No visibility',
+                problem: 'With regular email, you never know if employees actually read the message.',
+                solution: 'Dedicated Emailing shows delivery rates, open rates, and who acknowledged each communication.',
+              },
+              {
+                title: 'No targeting',
+                problem: 'Sending to the right people means manually managing distribution lists.',
+                solution: 'Smart employee groups let you target by department, location, role, or any custom segment.',
+              },
+              {
+                title: 'No accountability',
+                problem: 'Critical policy updates and compliance notices have no confirmation trail.',
+                solution: 'Acknowledgment tracking lets employees confirm they\'ve read important communications.',
+              },
+            ].map((item) => (
+              <div key={item.title} className="rounded-xl p-6" style={{ backgroundColor: '#F9FAFB', border: '1px solid #E5E7EB' }}>
+                <div className="text-sm font-bold uppercase tracking-wide mb-3" style={{ color: '#EF4444' }}>❌ {item.title}</div>
+                <p className="text-sm mb-4" style={{ color: '#6B7280' }}>{item.problem}</p>
+                <div className="text-sm font-bold uppercase tracking-wide mb-2" style={{ color: '#10B981' }}>✓ With Dedicated Emailing</div>
+                <p className="text-sm" style={{ color: '#374151' }}>{item.solution}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof */}
+      <section className="py-10 border-b" style={{ borderColor: '#E5E7EB' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-sm font-semibold uppercase tracking-widest mb-8" style={{ color: '#9CA3AF' }}>Trusted by compliance-conscious teams at</p>
+          <p className="text-center text-sm font-semibold uppercase tracking-widest mb-6" style={{ color: '#9CA3AF' }}>Trusted by HR & Operations teams at</p>
           <div className="flex flex-wrap justify-center items-center gap-12">
-            {['E-Commerce Co.', 'FinTech Corp', 'HealthPlus', 'RetailMax', 'SaaS Labs'].map((name) => (
+            {['Acme Corp', 'TechWorks', 'BuildRight', 'NovaCare', 'PeakOps'].map((name) => (
               <div key={name} className="text-lg font-bold" style={{ color: '#D1D5DB' }}>{name}</div>
             ))}
           </div>
@@ -119,108 +198,95 @@ export default function HomePage() {
       <section className="py-20" style={{ backgroundColor: '#FFFFFF' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold" style={{ color: '#1F2937' }}>Delivery + Compliance in One Platform</h2>
-            <p className="mt-4 text-xl" style={{ color: '#6B7280' }}>Stop juggling separate tools. Dedicated Emails handles both.</p>
+            <h2 className="text-4xl font-bold" style={{ color: '#1F2937' }}>Everything your team needs to stay connected</h2>
+            <p className="mt-4 text-xl" style={{ color: '#6B7280' }}>Reach employees · Measure engagement · Stay organized</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {[
               {
-                icon: <Mail className="w-7 h-7" style={{ color: '#0891B2' }} />,
-                title: 'Dedicated IP Delivery',
-                desc: 'Your own dedicated sending IPs mean your reputation is never affected by other senders. Higher inbox placement, guaranteed.',
-              },
-              {
-                icon: <Shield className="w-7 h-7" style={{ color: '#0891B2' }} />,
-                title: 'Compliance Monitoring',
-                desc: 'Real-time checks against CAN-SPAM, GDPR, CASL, and carrier regulations. Get alerted before a violation becomes a fine.',
-              },
-              {
-                icon: <AlertTriangle className="w-7 h-7" style={{ color: '#0891B2' }} />,
-                title: 'Violation Alerts',
-                desc: 'Instant notifications when a campaign or message fails a compliance check — with remediation steps built right in.',
+                icon: <FileText className="w-7 h-7" style={{ color: '#0891B2' }} />,
+                title: 'Announcement Builder',
+                desc: 'Create branded company updates with templates, rich text, images, and scheduled delivery. No design skills required.',
+                bullets: ['Drag-and-drop email composer', 'Pre-built announcement templates', 'Schedule for optimal send times'],
               },
               {
                 icon: <BarChart3 className="w-7 h-7" style={{ color: '#0891B2' }} />,
-                title: 'Deliverability Analytics',
-                desc: 'Track opens, clicks, bounces, and spam complaints in real time. Know exactly where your emails land and why.',
+                title: 'Communication Analytics',
+                desc: 'Track deliveries, opens, clicks, and employee engagement across departments. Know your message landed.',
+                bullets: ['Real-time delivery & open tracking', 'Department-level engagement reports', 'Follow-up lists for non-openers'],
               },
               {
-                icon: <FileCheck className="w-7 h-7" style={{ color: '#0891B2' }} />,
-                title: 'Audit-Ready Reports',
-                desc: 'Generate compliance audit reports on demand. Prove your program is clean to regulators, carriers, or your legal team.',
+                icon: <Users className="w-7 h-7" style={{ color: '#0891B2' }} />,
+                title: 'Smart Employee Groups',
+                desc: 'Target communications by department, office, location, or any custom employee group you define.',
+                bullets: ['Sync with your HR system or directory', 'Custom segments by role, location, or team', 'One-click all-company broadcasts'],
               },
               {
-                icon: <Activity className="w-7 h-7" style={{ color: '#0891B2' }} />,
-                title: 'Sender Reputation Tracking',
-                desc: 'Monitor your IP and domain reputation scores daily. Catch deliverability issues before they impact your campaigns.',
+                icon: <CheckCircle className="w-7 h-7" style={{ color: '#0891B2' }} />,
+                title: 'Acknowledgment Tracking',
+                desc: 'Request confirmation that employees have read important company policies, compliance notices, and critical updates.',
+                bullets: ['One-click employee acknowledgment', 'Compliance audit trail & reporting', 'Automated reminders for non-responders'],
               },
             ].map((f) => (
               <div key={f.title} className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow border" style={{ borderColor: '#0891B233' }}>
-                <div className="flex justify-center mb-4">
-                  <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ backgroundColor: '#CFFAFE' }}>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#CFFAFE' }}>
                     {f.icon}
                   </div>
+                  <h3 className="text-xl font-bold" style={{ color: '#1F2937' }}>{f.title}</h3>
                 </div>
-                <h3 className="text-xl font-bold text-center mb-3" style={{ color: '#1F2937' }}>{f.title}</h3>
-                <p className="text-center" style={{ color: '#6B7280' }}>{f.desc}</p>
+                <p className="mb-4" style={{ color: '#6B7280' }}>{f.desc}</p>
+                <ul className="space-y-2">
+                  {f.bullets.map((b) => (
+                    <li key={b} className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: '#0891B2' }} />
+                      <span className="text-sm" style={{ color: '#374151' }}>{b}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Compliance Coverage Section */}
+      {/* How It Works — 3 Steps */}
       <section className="py-20" style={{ backgroundColor: '#F9FAFB' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-4xl font-bold mb-6" style={{ color: '#1F2937' }}>Full Regulatory Coverage</h2>
-              <p className="text-lg mb-8" style={{ color: '#6B7280' }}>
-                Email compliance isn&apos;t optional. Dedicated Emails monitors your sending program against every major regulation — automatically.
-              </p>
-              <div className="space-y-4">
-                {[
-                  { reg: 'CAN-SPAM Act', desc: 'Header validation, unsubscribe links, physical address checks' },
-                  { reg: 'GDPR / CASL', desc: 'Consent tracking, data subject rights, opt-in verification' },
-                  { reg: 'DKIM / SPF / DMARC', desc: 'Authentication records validated on every send' },
-                  { reg: 'Carrier Compliance', desc: 'Content screening against carrier filtering rules' },
-                  { reg: 'Suppression Lists', desc: 'Automatic sync with global suppression and opt-out lists' },
-                ].map((item) => (
-                  <div key={item.reg} className="flex gap-4 p-4 rounded-xl" style={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB' }}>
-                    <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#0891B2' }} />
-                    <div>
-                      <div className="font-semibold" style={{ color: '#1F2937' }}>{item.reg}</div>
-                      <div className="text-sm mt-0.5" style={{ color: '#6B7280' }}>{item.desc}</div>
-                    </div>
-                  </div>
-                ))}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl font-bold" style={{ color: '#1F2937' }}>How it works</h2>
+            <p className="mt-4 text-xl" style={{ color: '#6B7280' }}>From draft to delivered in minutes.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                step: '01',
+                icon: <FileText className="w-8 h-8" style={{ color: '#0891B2' }} />,
+                title: 'Create',
+                desc: 'Build your announcement using templates or the drag-and-drop composer. Add images, buttons, and custom branding.',
+              },
+              {
+                step: '02',
+                icon: <Send className="w-8 h-8" style={{ color: '#0891B2' }} />,
+                title: 'Deliver',
+                desc: 'Send to your entire company or target specific departments, locations, or employee groups. Schedule for the right moment.',
+              },
+              {
+                step: '03',
+                icon: <TrendingUp className="w-8 h-8" style={{ color: '#0891B2' }} />,
+                title: 'Measure',
+                desc: 'See who opened, clicked, and acknowledged. Follow up with employees who haven\'t engaged. Close the loop.',
+              },
+            ].map((step) => (
+              <div key={step.step} className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4" style={{ backgroundColor: '#CFFAFE' }}>
+                  {step.icon}
+                </div>
+                <div className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: '#0891B2' }}>Step {step.step}</div>
+                <h3 className="text-2xl font-bold mb-3" style={{ color: '#1F2937' }}>{step.title}</h3>
+                <p style={{ color: '#6B7280' }}>{step.desc}</p>
               </div>
-            </div>
-            <div className="rounded-2xl p-8 shadow-xl" style={{ backgroundColor: '#164E63' }}>
-              <h3 className="text-2xl font-bold text-white mb-6">Compliance Score</h3>
-              <div className="space-y-4">
-                {[
-                  { label: 'Authentication', score: 100 },
-                  { label: 'Content Compliance', score: 98 },
-                  { label: 'List Hygiene', score: 95 },
-                  { label: 'Sender Reputation', score: 97 },
-                ].map((item) => (
-                  <div key={item.label}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm" style={{ color: '#A5F3FC' }}>{item.label}</span>
-                      <span className="text-sm font-bold text-white">{item.score}%</span>
-                    </div>
-                    <div className="h-2 rounded-full" style={{ backgroundColor: '#0E3A4A' }}>
-                      <div className="h-2 rounded-full" style={{ width: `${item.score}%`, backgroundColor: '#0891B2' }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 p-4 rounded-xl" style={{ backgroundColor: '#0E3A4A' }}>
-                <div className="text-4xl font-extrabold text-white text-center">97.5</div>
-                <div className="text-center text-sm mt-1" style={{ color: '#A5F3FC' }}>Overall Compliance Score</div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -229,34 +295,34 @@ export default function HomePage() {
       <section className="py-20" style={{ backgroundColor: '#FFFFFF' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold" style={{ color: '#1F2937' }}>Built for Every Team</h2>
-            <p className="mt-4 text-xl" style={{ color: '#6B7280' }}>Whether you send 1,000 or 10 million emails a month, compliance matters at every scale.</p>
+            <h2 className="text-4xl font-bold" style={{ color: '#1F2937' }}>Built for HR, People Ops & Leadership</h2>
+            <p className="mt-4 text-xl" style={{ color: '#6B7280' }}>Company news · Benefits · Policy updates · Internal alerts</p>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
-                icon: <ShoppingCart className="w-8 h-8" style={{ color: '#0891B2' }} />,
-                title: 'E-Commerce',
-                desc: 'Order confirmations, shipping updates, and promotional campaigns — all delivered compliantly with automatic unsubscribe management.',
-                bullets: ['CAN-SPAM compliant transactional email', 'Suppression list auto-sync', 'Carrier-approved content screening'],
+                icon: <Users className="w-8 h-8" style={{ color: '#0891B2' }} />,
+                title: 'HR & People Teams',
+                desc: 'Keep employees informed on benefits, policies, and culture initiatives. Ensure compliance notices and enrollment deadlines never get missed.',
+                bullets: ['Benefits enrollment reminders', 'Policy update announcements', 'Acknowledgment-required compliance notices'],
               },
               {
                 icon: <Building2 className="w-8 h-8" style={{ color: '#0891B2' }} />,
-                title: 'SaaS & Tech',
-                desc: 'Onboarding sequences, billing notifications, and product updates delivered reliably with GDPR consent tracking built in.',
-                bullets: ['GDPR consent management', 'API-first with webhook events', 'Audit logs for every send'],
+                title: 'Leadership & Executives',
+                desc: 'Communicate company direction, quarterly results, and strategic updates directly to your workforce — with visibility into who\'s seen it.',
+                bullets: ['All-hands meeting announcements', 'Quarterly business updates', 'Company milestone celebrations'],
               },
               {
-                icon: <Headphones className="w-8 h-8" style={{ color: '#0891B2' }} />,
-                title: 'Financial Services',
-                desc: 'Regulatory-grade email delivery for account alerts, statements, and compliance notices with full audit trail.',
-                bullets: ['SOC 2 Type II certified', 'Immutable audit trail', 'Data residency controls'],
+                icon: <Shield className="w-8 h-8" style={{ color: '#0891B2' }} />,
+                title: 'IT & Security',
+                desc: 'Send urgent system alerts, maintenance windows, and security advisories that employees actually see — not buried in Slack or missed in email.',
+                bullets: ['Urgent outage & incident alerts', 'Security awareness notices', 'System maintenance windows'],
               },
               {
-                icon: <BarChart3 className="w-8 h-8" style={{ color: '#0891B2' }} />,
-                title: 'Marketing Teams',
-                desc: 'Run campaigns confidently knowing every send is screened for compliance before it goes out — not after.',
-                bullets: ['Pre-send compliance checks', 'A/B testing with compliance guardrails', 'Real-time violation alerts'],
+                icon: <MessageSquare className="w-8 h-8" style={{ color: '#0891B2' }} />,
+                title: 'Operations & Facilities',
+                desc: 'Coordinate office logistics, event reminders, and operational updates across locations and departments with ease.',
+                bullets: ['Office closure & holiday notices', 'Event & training reminders', 'Multi-location announcements'],
               },
             ].map((uc) => (
               <div key={uc.title} className="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-shadow border" style={{ borderColor: '#0891B233' }}>
@@ -282,19 +348,21 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20" style={{ backgroundColor: '#ECFEFF' }}>
+      <section className="py-20" style={{ backgroundColor: '#164E63' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6" style={{ color: '#1F2937' }}>Start Delivering Compliantly Today</h2>
-          <p className="text-xl mb-10" style={{ color: '#6B7280' }}>Join 500+ businesses that trust Dedicated Emails for delivery and compliance monitoring.</p>
+          <h2 className="text-4xl font-bold mb-6 text-white">Bring your company communications together</h2>
+          <p className="text-xl mb-10" style={{ color: '#A5F3FC' }}>
+            Unlike traditional email, Dedicated Emailing gives HR and leadership a centralized way to send targeted company communications, measure engagement, and track who has acknowledged important updates.
+          </p>
           <div className="flex justify-center gap-4 flex-wrap">
-            <Link href="/signup" className="inline-flex items-center gap-2 px-10 py-5 text-white text-xl font-semibold rounded-lg shadow-lg transition-opacity hover:opacity-90" style={{ backgroundColor: '#0891B2' }}>
-              Start Free Trial <ArrowRight className="w-5 h-5" />
+            <Link href="/demo" className="inline-flex items-center gap-2 px-10 py-5 text-xl font-semibold rounded-lg shadow-lg transition-opacity hover:opacity-90" style={{ backgroundColor: '#0891B2', color: '#FFFFFF' }}>
+              Book a Demo <ArrowRight className="w-5 h-5" />
             </Link>
-            <Link href="/demo" className="inline-flex items-center gap-2 px-10 py-5 text-xl font-semibold rounded-lg border-2 transition-opacity hover:opacity-90" style={{ color: '#0891B2', borderColor: '#0891B2', backgroundColor: '#FFFFFF' }}>
-              Book a Demo
+            <Link href="/signup" className="inline-flex items-center gap-2 px-10 py-5 text-xl font-semibold rounded-lg border-2 transition-opacity hover:opacity-90" style={{ color: '#FFFFFF', borderColor: '#FFFFFF', backgroundColor: 'transparent' }}>
+              Start Free Trial
             </Link>
           </div>
-          <p className="mt-4 text-sm" style={{ color: '#9CA3AF' }}>No credit card required. 14-day free trial.</p>
+          <p className="mt-4 text-sm" style={{ color: '#67E8F9' }}>No credit card required. 14-day free trial.</p>
         </div>
       </section>
 

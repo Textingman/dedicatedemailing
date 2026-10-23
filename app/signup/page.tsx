@@ -2,246 +2,313 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Mail, Lock, User, Building2, CheckCircle } from 'lucide-react';
+import { Mail, Lock, User, Building2, CheckCircle, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-export default function SignupPage() {
+export default function SignInPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [activeTab, setActiveTab] = useState<'signin' | 'employee'>('signin');
+
+  // Sign In state
+  const [signInData, setSignInData] = useState({ email: '', password: '' });
+  const [signInErrors, setSignInErrors] = useState<Record<string, string>>({});
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
+  // Employee Sign Up state
+  const [empData, setEmpData] = useState({
     firstName: '',
     lastName: '',
     workEmail: '',
-    company: '',
+    orgCode: '',
     password: '',
     confirmPassword: '',
+    phone: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [empErrors, setEmpErrors] = useState<Record<string, string>>({});
+  const [isCreating, setIsCreating] = useState(false);
 
-  const validate = () => {
-    const newErrors: Record<string, string> = {};
-    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
-    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
-    if (!formData.workEmail.trim()) newErrors.workEmail = 'Work email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.workEmail)) newErrors.workEmail = 'Enter a valid email';
-    if (!formData.company.trim()) newErrors.company = 'Company name is required';
-    if (!formData.password) newErrors.password = 'Password is required';
-    else if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters';
-    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
-    return newErrors;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Sign In handlers
+  const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    setIsSubmitting(true);
-    // Simulate account creation
-    setTimeout(() => {
-      setIsSubmitting(false);
-      router.push('/product-demo');
-    }, 1500);
+    const errs: Record<string, string> = {};
+    if (!signInData.email.trim()) errs.email = 'Email is required';
+    if (!signInData.password) errs.password = 'Password is required';
+    if (Object.keys(errs).length > 0) { setSignInErrors(errs); return; }
+    setIsSigningIn(true);
+    setTimeout(() => { setIsSigningIn(false); router.push('/product-demo'); }, 1200);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: '' });
-    }
+  // Employee Sign Up handlers
+  const handleEmpSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs: Record<string, string> = {};
+    if (!empData.firstName.trim()) errs.firstName = 'Required';
+    if (!empData.lastName.trim()) errs.lastName = 'Required';
+    if (!empData.workEmail.trim()) errs.workEmail = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(empData.workEmail)) errs.workEmail = 'Enter a valid email';
+    if (!empData.orgCode.trim()) errs.orgCode = 'Organization code is required';
+    if (!empData.password) errs.password = 'Password is required';
+    else if (empData.password.length < 8) errs.password = 'Min. 8 characters';
+    if (empData.password !== empData.confirmPassword) errs.confirmPassword = 'Passwords do not match';
+    if (Object.keys(errs).length > 0) { setEmpErrors(errs); return; }
+    setIsCreating(true);
+    setTimeout(() => { setIsCreating(false); router.push('/communication-preferences'); }, 1200);
   };
+
+  const inputClass = (err?: string) =>
+    `w-full px-3 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-cyan-300`;
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F9FAFB' }}>
       <Navbar />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-
-          {/* Left: Value props */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-4" style={{ backgroundColor: '#CFFAFE', color: '#0891B2' }}>
-              14-Day Free Trial — No Credit Card Required
-            </div>
-            <h1 className="text-4xl font-extrabold mb-4" style={{ color: '#1F2937' }}>
-              Start Your Free Trial
-            </h1>
-            <p className="text-lg mb-8" style={{ color: '#6B7280' }}>
-              Get full access to Dedicated Emails — email delivery, compliance monitoring, and analytics — free for 14 days.
-            </p>
-
-            <div className="space-y-4">
-              {[
-                { title: 'Dedicated IP Delivery', desc: 'Your own sending IPs from day one' },
-                { title: 'Compliance Monitoring', desc: 'CAN-SPAM, GDPR, and carrier checks built in' },
-                { title: 'Real-Time Analytics', desc: 'Track opens, clicks, bounces, and violations' },
-                { title: 'Audit-Ready Reports', desc: 'Generate compliance reports on demand' },
-                { title: 'No credit card needed', desc: 'Start free, upgrade when you\'re ready' },
-              ].map((item) => (
-                <div key={item.title} className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#0891B2' }} />
-                  <div>
-                    <div className="font-semibold text-sm" style={{ color: '#1F2937' }}>{item.title}</div>
-                    <div className="text-sm" style={{ color: '#6B7280' }}>{item.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 p-4 rounded-xl" style={{ backgroundColor: '#ECFEFF', border: '1px solid #CFFAFE' }}>
-              <p className="text-sm" style={{ color: '#0891B2' }}>
-                Already have an account?{' '}
-                <Link href="/login" className="font-semibold underline">Sign in here</Link>
-              </p>
-            </div>
+      <div className="max-w-lg mx-auto px-4 sm:px-6 py-16">
+        {/* Card */}
+        <div className="rounded-2xl shadow-xl overflow-hidden" style={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB' }}>
+          {/* Tab bar */}
+          <div className="flex border-b" style={{ borderColor: '#E5E7EB' }}>
+            <button
+              onClick={() => setActiveTab('signin')}
+              className={`flex-1 py-4 text-sm font-semibold transition-colors ${activeTab === 'signin' ? 'border-b-2' : ''}`}
+              style={{
+                color: activeTab === 'signin' ? '#0891B2' : '#6B7280',
+                borderColor: activeTab === 'signin' ? '#0891B2' : 'transparent',
+                backgroundColor: activeTab === 'signin' ? '#F0FDFF' : 'transparent',
+              }}
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => setActiveTab('employee')}
+              className={`flex-1 py-4 text-sm font-semibold transition-colors ${activeTab === 'employee' ? 'border-b-2' : ''}`}
+              style={{
+                color: activeTab === 'employee' ? '#0891B2' : '#6B7280',
+                borderColor: activeTab === 'employee' ? '#0891B2' : 'transparent',
+                backgroundColor: activeTab === 'employee' ? '#F0FDFF' : 'transparent',
+              }}
+            >
+              Employee Sign Up
+            </button>
           </div>
 
-          {/* Right: Sign up form */}
-          <div className="rounded-2xl shadow-xl p-8" style={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB' }}>
-            <h2 className="text-2xl font-bold mb-6" style={{ color: '#1F2937' }}>Create your account</h2>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Name row */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>First Name *</label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      placeholder="Jane"
-                      className="w-full pl-9 pr-3 py-3 rounded-lg border text-sm focus:outline-none"
-                      style={{ borderColor: errors.firstName ? '#EF4444' : '#D1D5DB' }}
-                    />
+          <div className="p-8">
+            {/* ── SIGN IN TAB ── */}
+            {activeTab === 'signin' && (
+              <>
+                <div className="mb-6">
+                  <h1 className="text-2xl font-bold" style={{ color: '#1F2937' }}>Welcome back</h1>
+                  <p className="text-sm mt-1" style={{ color: '#6B7280' }}>Sign in to your Dedicated Emailing account.</p>
+                </div>
+                <form onSubmit={handleSignIn} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Email</label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
+                      <input
+                        type="email"
+                        value={signInData.email}
+                        onChange={(e) => setSignInData({ ...signInData, email: e.target.value })}
+                        placeholder="you@company.com"
+                        className={`${inputClass(signInErrors.email)} pl-9`}
+                        style={{ borderColor: signInErrors.email ? '#EF4444' : '#D1D5DB' }}
+                      />
+                    </div>
+                    {signInErrors.email && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{signInErrors.email}</p>}
                   </div>
-                  {errors.firstName && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{errors.firstName}</p>}
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <label className="text-sm font-medium" style={{ color: '#374151' }}>Password</label>
+                      <Link href="/forgot-password" className="text-xs" style={{ color: '#0891B2' }}>Forgot password?</Link>
+                    </div>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
+                      <input
+                        type="password"
+                        value={signInData.password}
+                        onChange={(e) => setSignInData({ ...signInData, password: e.target.value })}
+                        placeholder="Your password"
+                        className={`${inputClass(signInErrors.password)} pl-9`}
+                        style={{ borderColor: signInErrors.password ? '#EF4444' : '#D1D5DB' }}
+                      />
+                    </div>
+                    {signInErrors.password && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{signInErrors.password}</p>}
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSigningIn}
+                    className="w-full py-3 text-white font-semibold rounded-lg transition-opacity hover:opacity-90"
+                    style={{ backgroundColor: isSigningIn ? '#9CA3AF' : '#0891B2' }}
+                  >
+                    {isSigningIn ? 'Signing in...' : 'Sign In →'}
+                  </button>
+                </form>
+                <p className="text-xs text-center mt-6" style={{ color: '#9CA3AF' }}>
+                  New employee?{' '}
+                  <button onClick={() => setActiveTab('employee')} className="font-semibold underline" style={{ color: '#0891B2' }}>
+                    Create your employee account
+                  </button>
+                </p>
+              </>
+            )}
+
+            {/* ── EMPLOYEE SIGN UP TAB ── */}
+            {activeTab === 'employee' && (
+              <>
+                <div className="mb-6">
+                  <h1 className="text-2xl font-bold" style={{ color: '#1F2937' }}>Create your employee account</h1>
+                  <p className="text-sm mt-1" style={{ color: '#6B7280' }}>
+                    Your organization must already have a Dedicated Emailing account. Enter your organization code to join.
+                  </p>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Last Name *</label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Smith"
-                    className="w-full px-3 py-3 rounded-lg border text-sm focus:outline-none"
-                    style={{ borderColor: errors.lastName ? '#EF4444' : '#D1D5DB' }}
-                  />
-                  {errors.lastName && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{errors.lastName}</p>}
-                </div>
-              </div>
+                <form onSubmit={handleEmpSubmit} className="space-y-4">
+                  {/* Name row */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>First Name *</label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
+                        <input
+                          type="text"
+                          value={empData.firstName}
+                          onChange={(e) => setEmpData({ ...empData, firstName: e.target.value })}
+                          placeholder="Jane"
+                          className={`${inputClass(empErrors.firstName)} pl-9`}
+                          style={{ borderColor: empErrors.firstName ? '#EF4444' : '#D1D5DB' }}
+                        />
+                      </div>
+                      {empErrors.firstName && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.firstName}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Last Name *</label>
+                      <input
+                        type="text"
+                        value={empData.lastName}
+                        onChange={(e) => setEmpData({ ...empData, lastName: e.target.value })}
+                        placeholder="Smith"
+                        className={inputClass(empErrors.lastName)}
+                        style={{ borderColor: empErrors.lastName ? '#EF4444' : '#D1D5DB' }}
+                      />
+                      {empErrors.lastName && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.lastName}</p>}
+                    </div>
+                  </div>
 
-              {/* Work email */}
-              <div>
-                <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Work Email *</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
-                  <input
-                    type="email"
-                    name="workEmail"
-                    value={formData.workEmail}
-                    onChange={handleChange}
-                    placeholder="jane@company.com"
-                    className="w-full pl-9 pr-3 py-3 rounded-lg border text-sm focus:outline-none"
-                    style={{ borderColor: errors.workEmail ? '#EF4444' : '#D1D5DB' }}
-                  />
-                </div>
-                {errors.workEmail && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{errors.workEmail}</p>}
-              </div>
+                  {/* Work email */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Work Email *</label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
+                      <input
+                        type="email"
+                        value={empData.workEmail}
+                        onChange={(e) => setEmpData({ ...empData, workEmail: e.target.value })}
+                        placeholder="jane@yourcompany.com"
+                        className={`${inputClass(empErrors.workEmail)} pl-9`}
+                        style={{ borderColor: empErrors.workEmail ? '#EF4444' : '#D1D5DB' }}
+                      />
+                    </div>
+                    {empErrors.workEmail && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.workEmail}</p>}
+                  </div>
 
-              {/* Company */}
-              <div>
-                <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Company *</label>
-                <div className="relative">
-                  <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    placeholder="Acme Corp"
-                    className="w-full pl-9 pr-3 py-3 rounded-lg border text-sm focus:outline-none"
-                    style={{ borderColor: errors.company ? '#EF4444' : '#D1D5DB' }}
-                  />
-                </div>
-                {errors.company && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{errors.company}</p>}
-              </div>
+                  {/* Organization code */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Organization Code *</label>
+                    <div className="relative">
+                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
+                      <input
+                        type="text"
+                        value={empData.orgCode}
+                        onChange={(e) => setEmpData({ ...empData, orgCode: e.target.value })}
+                        placeholder="e.g. ACME-2026"
+                        className={`${inputClass(empErrors.orgCode)} pl-9`}
+                        style={{ borderColor: empErrors.orgCode ? '#EF4444' : '#D1D5DB' }}
+                      />
+                    </div>
+                    {empErrors.orgCode && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.orgCode}</p>}
+                    <p className="text-xs mt-1" style={{ color: '#9CA3AF' }}>Ask your HR or IT admin for your organization code.</p>
+                  </div>
 
-              {/* Password */}
-              <div>
-                <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Password *</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Min. 8 characters"
-                    className="w-full pl-9 pr-3 py-3 rounded-lg border text-sm focus:outline-none"
-                    style={{ borderColor: errors.password ? '#EF4444' : '#D1D5DB' }}
-                  />
-                </div>
-                {errors.password && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{errors.password}</p>}
-              </div>
+                  {/* Phone (optional, for SMS opt-in) */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Mobile Phone <span style={{ color: '#9CA3AF' }}>(optional)</span></label>
+                    <input
+                      type="tel"
+                      value={empData.phone}
+                      onChange={(e) => setEmpData({ ...empData, phone: e.target.value })}
+                      placeholder="+1 (555) 000-0000"
+                      className={inputClass()}
+                      style={{ borderColor: '#D1D5DB' }}
+                    />
+                    <p className="text-xs mt-1" style={{ color: '#9CA3AF' }}>Used for SMS notifications if you choose to opt in on the next step.</p>
+                  </div>
 
-              {/* Confirm password */}
-              <div>
-                <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Confirm Password *</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    placeholder="Re-enter password"
-                    className="w-full pl-9 pr-3 py-3 rounded-lg border text-sm focus:outline-none"
-                    style={{ borderColor: errors.confirmPassword ? '#EF4444' : '#D1D5DB' }}
-                  />
-                </div>
-                {errors.confirmPassword && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{errors.confirmPassword}</p>}
-              </div>
+                  {/* Password */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Password *</label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
+                      <input
+                        type="password"
+                        value={empData.password}
+                        onChange={(e) => setEmpData({ ...empData, password: e.target.value })}
+                        placeholder="Min. 8 characters"
+                        className={`${inputClass(empErrors.password)} pl-9`}
+                        style={{ borderColor: empErrors.password ? '#EF4444' : '#D1D5DB' }}
+                      />
+                    </div>
+                    {empErrors.password && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.password}</p>}
+                  </div>
 
-              {/* Transactional SMS consent */}
-              <div className="flex items-start gap-3 pt-1">
-                <input type="checkbox" id="accountNotifications" className="mt-1 w-4 h-4 rounded flex-shrink-0" style={{ accentColor: '#0891B2' }} />
-                <label htmlFor="accountNotifications" className="text-xs" style={{ color: '#6B7280' }}>
-                  By checking this box, I agree to receive Transactional Account Notification SMS messages from Dedicated Emails at the phone number provided. I understand I may opt out at any time by replying STOP. Reply HELP for help. Message and data rates may apply. Message frequency varies. Opting in is optional and not required to submit this form. Consent is not required as a condition of purchasing any products or services.
-                </label>
-              </div>
+                  {/* Confirm password */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Confirm Password *</label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
+                      <input
+                        type="password"
+                        value={empData.confirmPassword}
+                        onChange={(e) => setEmpData({ ...empData, confirmPassword: e.target.value })}
+                        placeholder="Re-enter password"
+                        className={`${inputClass(empErrors.confirmPassword)} pl-9`}
+                        style={{ borderColor: empErrors.confirmPassword ? '#EF4444' : '#D1D5DB' }}
+                      />
+                    </div>
+                    {empErrors.confirmPassword && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.confirmPassword}</p>}
+                  </div>
 
-              {/* Terms */}
-              <div className="flex items-start gap-3">
-                <input type="checkbox" id="terms" required className="mt-1 w-4 h-4 rounded flex-shrink-0" style={{ accentColor: '#0891B2' }} />
-                <label htmlFor="terms" className="text-xs" style={{ color: '#6B7280' }}>
-                  I agree to the{' '}
-                  <Link href="/terms" className="underline" style={{ color: '#0891B2' }}>Terms of Service</Link>
-                  {' '}and{' '}
-                  <Link href="/privacy" className="underline" style={{ color: '#0891B2' }}>Privacy Policy</Link>. *
-                </label>
-              </div>
+                  {/* Terms */}
+                  <div className="flex items-start gap-3 pt-1">
+                    <input type="checkbox" id="empTerms" required className="mt-1 w-4 h-4 flex-shrink-0" style={{ accentColor: '#0891B2' }} />
+                    <label htmlFor="empTerms" className="text-xs" style={{ color: '#6B7280' }}>
+                      I agree to the{' '}
+                      <Link href="/terms" className="underline" style={{ color: '#0891B2' }}>Terms of Service</Link>
+                      {' '}and{' '}
+                      <Link href="/privacy" className="underline" style={{ color: '#0891B2' }}>Privacy Policy</Link>. *
+                    </label>
+                  </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-4 text-white font-semibold rounded-lg text-base transition-opacity hover:opacity-90 mt-2"
-                style={{ backgroundColor: isSubmitting ? '#9CA3AF' : '#0891B2' }}
-              >
-                {isSubmitting ? 'Creating your account...' : 'Start Free Trial →'}
-              </button>
+                  <button
+                    type="submit"
+                    disabled={isCreating}
+                    className="w-full py-3 text-white font-semibold rounded-lg transition-opacity hover:opacity-90 flex items-center justify-center gap-2"
+                    style={{ backgroundColor: isCreating ? '#9CA3AF' : '#0891B2' }}
+                  >
+                    {isCreating ? 'Creating account...' : (<>Create Account & Set Preferences <ArrowRight className="w-4 h-4" /></>)}
+                  </button>
 
-              <p className="text-xs text-center" style={{ color: '#9CA3AF' }}>
-                No credit card required. 14-day free trial.
-              </p>
-            </form>
+                  <p className="text-xs text-center" style={{ color: '#9CA3AF' }}>
+                    You&apos;ll choose your notification preferences on the next step.
+                  </p>
+                </form>
+                <p className="text-xs text-center mt-4" style={{ color: '#9CA3AF' }}>
+                  Already have an account?{' '}
+                  <button onClick={() => setActiveTab('signin')} className="font-semibold underline" style={{ color: '#0891B2' }}>
+                    Sign in
+                  </button>
+                </p>
+              </>
+            )}
           </div>
         </div>
       </div>
