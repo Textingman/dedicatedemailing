@@ -90,37 +90,6 @@ export default function ProductDemoPage() {
     <div className="min-h-screen" style={{ backgroundColor: '#FFFFFF' }}>
       <Navbar />
 
-      {/* ── Marketing hero above the app shell ── */}
-      <section className="py-14 border-b" style={{ backgroundColor: '#F4F8FA', borderColor: C.border }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4"
-            style={{ backgroundColor: C.primaryLight, color: C.primary }}>
-            Platform Preview
-          </div>
-          <h1 className="text-4xl font-bold mb-3" style={{ color: C.navy }}>
-            One platform. Every channel.<br />
-            <span style={{ color: C.primary }}>All your internal communications.</span>
-          </h1>
-          <p className="text-lg max-w-2xl mx-auto mb-6" style={{ color: C.slate }}>
-            Dedicated Emailing unifies email, intranet messaging, and SMS into a single hub — with delivery tracking, acknowledgment confirmation, and engagement analytics built in.
-          </p>
-          <div className="flex justify-center gap-3 flex-wrap">
-            {[
-              { icon: Mail,       label: 'Email' },
-              { icon: Monitor,    label: 'Intranet' },
-              { icon: Smartphone, label: 'SMS' },
-              { icon: Bell,       label: 'Push Alerts' },
-            ].map((c) => (
-              <div key={c.label} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border"
-                style={{ backgroundColor: '#FFFFFF', color: C.primary, borderColor: C.border }}>
-                <c.icon className="w-3.5 h-3.5" />
-                {c.label}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── App Shell ── */}
       <div className="border-b" style={{ borderColor: C.border, backgroundColor: C.appBg }}>
         <div className="max-w-7xl mx-auto">
