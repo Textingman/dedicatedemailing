@@ -13,8 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dedicated Emails - Dedicated Emails — Professional Email Solutions for Business",
-  description: "Dedicated Emails provides reliable, professional email services for businesses. Get started with transactional messaging and account notifications today.",
+  title: "Dedicated Emailing — Internal Communications Platform",
+  description: "Dedicated Emailing unifies email, intranet messaging, and SMS into one internal communications platform — with delivery tracking, acknowledgment confirmation, and engagement analytics.",
+  icons: {
+    icon: '/favicon.png',
+    apple: '/favicon.png',
+  },
 };
 
 export default function RootLayout({
