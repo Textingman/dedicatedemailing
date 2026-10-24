@@ -1,29 +1,52 @@
 @import "tailwindcss";
 
+/* ─── Design System Tokens ─────────────────────────────────────────── */
 :root {
+  /* Brand */
+  --color-primary:        #0795B7;
+  --color-primary-hover:  #087F9D;
+  --color-primary-light:  #E4F8FB;
+
+  /* Typography */
+  --color-navy:           #17283B;
+  --color-slate:          #617488;
+  --color-muted:          #9BA8B6;
+
+  /* Surfaces */
+  --color-app-bg:         #F4F8FA;
+  --color-card:           #FFFFFF;
+  --color-border:         #E3EAF0;
+
+  /* Semantic */
+  --color-success:        #0FAF83;
+  --color-warning:        #E79B22;
+  --color-error:          #DC5661;
+  --color-info:           #4789DC;
+
+  /* Legacy compat */
   --background: #ffffff;
-  --foreground: #2F3A40;
-  --primary: #2F3A40;
-  --accent: #3B82F6;
-  --muted: #6B7280;
+  --foreground: #17283B;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #2F3A40;
-    --foreground: #ededed;
-  }
-}
+/* Disable dark mode override — keep light only */
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-navy);
+  font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D1DCE5; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #B0BEC8; }
