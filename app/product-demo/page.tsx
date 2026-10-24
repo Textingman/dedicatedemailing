@@ -130,7 +130,7 @@ export default function ProductDemoPage() {
                 <div className="space-y-3 mb-4">
                   <div className="rounded-lg p-3" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
                     <div className="text-xs font-medium mb-1" style={{ color: '#6B7280' }}>To</div>
-                    <div className="text-sm font-medium" style={{ color: '#1F2937' }}>All Employees — 1,240 recipients <span className="text-xs font-normal" style={{ color: '#10B981' }}>✓ Synced from HR</span></div>
+                    <div className="text-sm font-medium" style={{ color: '#1F2937' }}>All Employees — 1,240 recipients <span className="text-xs font-normal" style={{ color: '#10B981' }}> Synced from HR</span></div>
                   </div>
                   <div className="rounded-lg p-3" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
                     <div className="text-xs font-medium mb-1" style={{ color: '#6B7280' }}>Subject / Headline</div>
@@ -139,9 +139,9 @@ export default function ProductDemoPage() {
                   <div className="rounded-lg p-3" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
                     <div className="text-xs font-medium mb-1" style={{ color: '#6B7280' }}>Channels</div>
                     <div className="flex gap-2">
-                      <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: '#CFFAFE', color: '#0891B2' }}>📧 Email</span>
-                      <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: '#CFFAFE', color: '#0891B2' }}>🖥 Intranet Post</span>
-                      <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: '#F3F4F6', color: '#9CA3AF' }}>📱 SMS (optional)</span>
+                      <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: '#CFFAFE', color: '#0891B2' }}> Email</span>
+                      <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: '#CFFAFE', color: '#0891B2' }}> Intranet Post</span>
+                      <span className="text-xs px-2 py-1 rounded-full font-medium" style={{ backgroundColor: '#F3F4F6', color: '#9CA3AF' }}> SMS (optional)</span>
                     </div>
                   </div>
                   <div className="rounded-lg p-3" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
@@ -186,9 +186,9 @@ export default function ProductDemoPage() {
               <div className="p-5 blur-sm select-none pointer-events-none">
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   {[
-                    { channel: '📧 Email', open: '71%', ack: '89%', sent: '1,240' },
-                    { channel: '🖥 Intranet', open: '64%', ack: '82%', sent: '1,240' },
-                    { channel: '📱 SMS', open: '94%', ack: '91%', sent: '480' },
+                    { channel: ' Email', open: '71%', ack: '89%', sent: '1,240' },
+                    { channel: ' Intranet', open: '64%', ack: '82%', sent: '1,240' },
+                    { channel: ' SMS', open: '94%', ack: '91%', sent: '480' },
                   ].map((ch) => (
                     <div key={ch.channel} className="rounded-xl p-3 text-center" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
                       <div className="text-sm font-bold mb-1" style={{ color: '#1F2937' }}>{ch.channel}</div>
@@ -331,7 +331,7 @@ export default function ProductDemoPage() {
                         <div className="text-xs" style={{ color: '#9CA3AF' }}>{emp.dept}</div>
                       </div>
                       <div className="text-right">
-                        <div className="text-xs" style={{ color: emp.ack ? '#10B981' : '#F59E0B' }}>{emp.ack ? '✓ Acknowledged' : '⏳ Pending'}</div>
+                        <div className="text-xs" style={{ color: emp.ack ? '#10B981' : '#F59E0B' }}>{emp.ack ? ' Acknowledged' : ' Pending'}</div>
                         <div className="text-xs" style={{ color: '#9CA3AF' }}>{emp.time}</div>
                       </div>
                     </div>
@@ -495,7 +495,7 @@ export default function ProductDemoPage() {
               </div>
               <div className="p-4" style={{ backgroundColor: '#FFFFFF' }}>
                 <div className="rounded-xl p-3 mb-3" style={{ backgroundColor: '#FEF3C7', border: '1px solid #FDE68A' }}>
-                  <div className="text-xs font-bold mb-1" style={{ color: '#92400E' }}>⚡ Urgent Alert</div>
+                  <div className="text-xs font-bold mb-1" style={{ color: '#92400E' }}> Urgent Alert</div>
                   <div className="text-sm font-medium" style={{ color: '#1F2937' }}>REMINDER: Open Enrollment closes Friday at 5pm. Log in to benefits portal to complete your selections.</div>
                   <div className="text-xs mt-2" style={{ color: '#6B7280' }}>Sent to: All Employees (1,240)</div>
                 </div>

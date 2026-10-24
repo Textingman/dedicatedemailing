@@ -162,9 +162,9 @@ export default function ComparePage() {
               {/* Channel breakdown */}
               <div className="grid grid-cols-3 gap-3 mb-4">
                 {[
-                  { channel: '📧 Email', sent: '1,240', opened: '71%', ack: '94%', color: '#0891B2' },
-                  { channel: '🖥 Intranet', sent: '1,240', opened: '64%', ack: '88%', color: '#0891B2' },
-                  { channel: '📱 SMS', sent: '480', opened: '96%', ack: '91%', color: '#10B981' },
+                  { channel: ' Email', sent: '1,240', opened: '71%', ack: '94%', color: '#0891B2' },
+                  { channel: ' Intranet', sent: '1,240', opened: '64%', ack: '88%', color: '#0891B2' },
+                  { channel: ' SMS', sent: '480', opened: '96%', ack: '91%', color: '#10B981' },
                 ].map((ch) => (
                   <div key={ch.channel} className="rounded-xl p-3" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
                     <div className="text-sm font-bold mb-2" style={{ color: '#1F2937' }}>{ch.channel}</div>
@@ -361,11 +361,11 @@ export default function ComparePage() {
                 <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
                 <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
-                <span className="ml-2 text-xs" style={{ color: '#A5F3FC' }}>📱 SMS Broadcast</span>
+                <span className="ml-2 text-xs" style={{ color: '#A5F3FC' }}> SMS Broadcast</span>
               </div>
               <div className="p-4" style={{ backgroundColor: '#FFFFFF' }}>
                 <div className="rounded-xl p-3 mb-3" style={{ backgroundColor: '#FEF3C7', border: '1px solid #FDE68A' }}>
-                  <div className="text-xs font-bold mb-1" style={{ color: '#92400E' }}>⚡ Urgent — All Employees</div>
+                  <div className="text-xs font-bold mb-1" style={{ color: '#92400E' }}> Urgent — All Employees</div>
                   <div className="text-sm" style={{ color: '#1F2937' }}>REMINDER: Open Enrollment closes Friday 5pm. Complete your selections at benefits.company.com</div>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
@@ -388,7 +388,7 @@ export default function ComparePage() {
                 <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
                 <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
-                <span className="ml-2 text-xs" style={{ color: '#A5F3FC' }}>✓ Acknowledgment Tracker</span>
+                <span className="ml-2 text-xs" style={{ color: '#A5F3FC' }}> Acknowledgment Tracker</span>
               </div>
               <div className="p-4" style={{ backgroundColor: '#FFFFFF' }}>
                 <div className="text-sm font-bold mb-3" style={{ color: '#1F2937' }}>IT Security Policy — Acknowledgment</div>
@@ -401,10 +401,10 @@ export default function ComparePage() {
                 <div className="text-xs mb-3" style={{ color: '#9CA3AF' }}>942 of 1,240 confirmed · 298 pending · Auto-reminder sent</div>
                 <div className="space-y-2">
                   {[
-                    { name: 'Sarah M. — Engineering', status: '✓ Acknowledged', time: '2 min ago', ok: true },
-                    { name: 'James T. — HR', status: '✓ Acknowledged', time: '5 min ago', ok: true },
-                    { name: 'Priya K. — Finance', status: '⏳ Pending', time: 'Reminder sent', ok: false },
-                    { name: 'Marcus L. — Sales', status: '⏳ Pending', time: 'Reminder sent', ok: false },
+                    { name: 'Sarah M. — Engineering', status: ' Acknowledged', time: '2 min ago', ok: true },
+                    { name: 'James T. — HR', status: ' Acknowledged', time: '5 min ago', ok: true },
+                    { name: 'Priya K. — Finance', status: ' Pending', time: 'Reminder sent', ok: false },
+                    { name: 'Marcus L. — Sales', status: ' Pending', time: 'Reminder sent', ok: false },
                   ].map((emp) => (
                     <div key={emp.name} className="flex items-center justify-between p-2 rounded-lg" style={{ backgroundColor: '#F8FAFC' }}>
                       <span className="text-xs" style={{ color: '#374151' }}>{emp.name}</span>

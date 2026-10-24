@@ -169,9 +169,9 @@ export default function HomePage() {
               },
             ].map((item) => (
               <div key={item.title} className="rounded-xl p-6" style={{ backgroundColor: '#F9FAFB', border: '1px solid #E5E7EB' }}>
-                <div className="text-sm font-bold uppercase tracking-wide mb-3" style={{ color: '#EF4444' }}>❌ {item.title}</div>
+                <div className="text-sm font-bold uppercase tracking-wide mb-3" style={{ color: '#EF4444' }}> {item.title}</div>
                 <p className="text-sm mb-4" style={{ color: '#6B7280' }}>{item.problem}</p>
-                <div className="text-sm font-bold uppercase tracking-wide mb-2" style={{ color: '#10B981' }}>✓ With Dedicated Emailing</div>
+                <div className="text-sm font-bold uppercase tracking-wide mb-2" style={{ color: '#10B981' }}> With Dedicated Emailing</div>
                 <p className="text-sm" style={{ color: '#374151' }}>{item.solution}</p>
               </div>
             ))}
