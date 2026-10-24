@@ -44,9 +44,6 @@ export default function HomePage() {
               <Link href="/demo" className="px-8 py-4 text-white text-lg font-semibold rounded-lg shadow-lg transition-opacity hover:opacity-90" style={{ backgroundColor: '#0891B2' }}>
                 Book a Demo
               </Link>
-              <Link href="/signup" className="px-8 py-4 text-lg font-semibold rounded-lg transition-opacity hover:opacity-90 border-2" style={{ color: '#0891B2', borderColor: '#0891B2', backgroundColor: '#FFFFFF' }}>
-                Start Free Trial
-              </Link>
             </div>
           </div>
 
@@ -358,11 +355,7 @@ export default function HomePage() {
             <Link href="/demo" className="inline-flex items-center gap-2 px-10 py-5 text-xl font-semibold rounded-lg shadow-lg transition-opacity hover:opacity-90" style={{ backgroundColor: '#0891B2', color: '#FFFFFF' }}>
               Book a Demo <ArrowRight className="w-5 h-5" />
             </Link>
-            <Link href="/signup" className="inline-flex items-center gap-2 px-10 py-5 text-xl font-semibold rounded-lg border-2 transition-opacity hover:opacity-90" style={{ color: '#FFFFFF', borderColor: '#FFFFFF', backgroundColor: 'transparent' }}>
-              Start Free Trial
-            </Link>
           </div>
-          <p className="mt-4 text-sm" style={{ color: '#67E8F9' }}>No credit card required. 14-day free trial.</p>
         </div>
       </section>
 
