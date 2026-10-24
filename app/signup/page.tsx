@@ -1,22 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState } from 'react';
-import { Mail, Lock, User, Building2, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, Building2, CheckCircle, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
-const C = {
-  primary: '#0795B7',
-  navy:    '#0F1E2E',
-  slate:   '#4A5E72',
-  muted:   '#8A9BAD',
-  appBg:   '#F6F8FA',
-  card:    '#FFFFFF',
-  border:  '#DDE4EC',
-};
 
 export default function SignInPage() {
   const router = useRouter();
@@ -40,6 +29,7 @@ export default function SignInPage() {
   const [empErrors, setEmpErrors] = useState<Record<string, string>>({});
   const [isCreating, setIsCreating] = useState(false);
 
+  // Sign In handlers
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
@@ -50,6 +40,7 @@ export default function SignInPage() {
     setTimeout(() => { setIsSigningIn(false); router.push('/product-demo'); }, 1200);
   };
 
+  // Employee Sign Up handlers
   const handleEmpSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
@@ -66,260 +57,261 @@ export default function SignInPage() {
     setTimeout(() => { setIsCreating(false); router.push('/communication-preferences'); }, 1200);
   };
 
-  const inputBase = 'w-full px-3 py-2.5 rounded-md border text-sm focus:outline-none focus:ring-2';
+  const inputClass = (err?: string) =>
+    `w-full px-3 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-cyan-300`;
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: C.appBg }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#F9FAFB' }}>
       <Navbar />
 
-      <section className="py-20">
-        <div className="max-w-lg mx-auto px-4 sm:px-6">
-          {/* Logo + heading */}
-          <div className="text-center mb-8">
-            <div className="flex justify-center mb-5">
-              <Image
-                src="/dedicated-emails-logo.png"
-                alt="Dedicated Emailing"
-                width={200}
-                height={67}
-                priority
-              />
-            </div>
-            <h1 className="text-2xl font-bold" style={{ color: C.navy, letterSpacing: '-0.02em' }}>
-              {activeTab === 'signin' ? 'Welcome back' : 'Create your employee account'}
-            </h1>
-            <p className="text-sm mt-1" style={{ color: C.slate }}>
-              {activeTab === 'signin'
-                ? 'Sign in to your Dedicated Emailing account.'
-                : 'Your organization must already have a Dedicated Emailing account.'}
-            </p>
+      <div className="max-w-lg mx-auto px-4 sm:px-6 py-16">
+        {/* Card */}
+        <div className="rounded-2xl shadow-xl overflow-hidden" style={{ backgroundColor: '#FFFFFF', border: '1px solid #E5E7EB' }}>
+          {/* Tab bar */}
+          <div className="flex border-b" style={{ borderColor: '#E5E7EB' }}>
+            <button
+              onClick={() => setActiveTab('signin')}
+              className={`flex-1 py-4 text-sm font-semibold transition-colors ${activeTab === 'signin' ? 'border-b-2' : ''}`}
+              style={{
+                color: activeTab === 'signin' ? '#0891B2' : '#6B7280',
+                borderColor: activeTab === 'signin' ? '#0891B2' : 'transparent',
+                backgroundColor: activeTab === 'signin' ? '#F0FDFF' : 'transparent',
+              }}
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => setActiveTab('employee')}
+              className={`flex-1 py-4 text-sm font-semibold transition-colors ${activeTab === 'employee' ? 'border-b-2' : ''}`}
+              style={{
+                color: activeTab === 'employee' ? '#0891B2' : '#6B7280',
+                borderColor: activeTab === 'employee' ? '#0891B2' : 'transparent',
+                backgroundColor: activeTab === 'employee' ? '#F0FDFF' : 'transparent',
+              }}
+            >
+              Employee Sign Up
+            </button>
           </div>
 
-          {/* Card */}
-          <div className="rounded-lg border shadow-sm overflow-hidden" style={{ backgroundColor: C.card, borderColor: C.border }}>
-            {/* Tab bar */}
-            <div className="flex border-b" style={{ borderColor: C.border }}>
-              <button
-                onClick={() => setActiveTab('signin')}
-                className="flex-1 py-3.5 text-sm font-semibold transition-colors"
-                style={{
-                  color: activeTab === 'signin' ? C.primary : C.muted,
-                  borderBottom: activeTab === 'signin' ? `2px solid ${C.primary}` : '2px solid transparent',
-                  backgroundColor: 'transparent',
-                }}
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => setActiveTab('employee')}
-                className="flex-1 py-3.5 text-sm font-semibold transition-colors"
-                style={{
-                  color: activeTab === 'employee' ? C.primary : C.muted,
-                  borderBottom: activeTab === 'employee' ? `2px solid ${C.primary}` : '2px solid transparent',
-                  backgroundColor: 'transparent',
-                }}
-              >
-                Employee Sign Up
-              </button>
-            </div>
-
-            <div className="p-7">
-              {/* ── SIGN IN ── */}
-              {activeTab === 'signin' && (
+          <div className="p-8">
+            {/* ── SIGN IN TAB ── */}
+            {activeTab === 'signin' && (
+              <>
+                <div className="mb-6">
+                  <h1 className="text-2xl font-bold" style={{ color: '#1F2937' }}>Welcome back</h1>
+                  <p className="text-sm mt-1" style={{ color: '#6B7280' }}>Sign in to your Dedicated Emailing account.</p>
+                </div>
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1" style={{ color: C.navy }}>Email</label>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Email</label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: C.muted }} />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
                       <input
                         type="email"
                         value={signInData.email}
                         onChange={(e) => setSignInData({ ...signInData, email: e.target.value })}
                         placeholder="you@company.com"
-                        className={`${inputBase} pl-9`}
-                        style={{ borderColor: signInErrors.email ? '#DC5661' : C.border }}
+                        className={`${inputClass(signInErrors.email)} pl-9`}
+                        style={{ borderColor: signInErrors.email ? '#EF4444' : '#D1D5DB' }}
                       />
                     </div>
-                    {signInErrors.email && <p className="text-xs mt-1" style={{ color: '#DC5661' }}>{signInErrors.email}</p>}
+                    {signInErrors.email && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{signInErrors.email}</p>}
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <label className="text-sm font-medium" style={{ color: C.navy }}>Password</label>
-                      <Link href="/forgot-password" className="text-xs" style={{ color: C.primary }}>Forgot password?</Link>
+                      <label className="text-sm font-medium" style={{ color: '#374151' }}>Password</label>
+                      <Link href="/forgot-password" className="text-xs" style={{ color: '#0891B2' }}>Forgot password?</Link>
                     </div>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: C.muted }} />
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
                       <input
                         type="password"
                         value={signInData.password}
                         onChange={(e) => setSignInData({ ...signInData, password: e.target.value })}
                         placeholder="Your password"
-                        className={`${inputBase} pl-9`}
-                        style={{ borderColor: signInErrors.password ? '#DC5661' : C.border }}
+                        className={`${inputClass(signInErrors.password)} pl-9`}
+                        style={{ borderColor: signInErrors.password ? '#EF4444' : '#D1D5DB' }}
                       />
                     </div>
-                    {signInErrors.password && <p className="text-xs mt-1" style={{ color: '#DC5661' }}>{signInErrors.password}</p>}
+                    {signInErrors.password && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{signInErrors.password}</p>}
                   </div>
                   <button
                     type="submit"
                     disabled={isSigningIn}
-                    className="w-full py-3 text-white font-semibold rounded-md text-sm transition-opacity hover:opacity-90"
-                    style={{ backgroundColor: isSigningIn ? C.muted : C.primary }}
+                    className="w-full py-3 text-white font-semibold rounded-lg transition-opacity hover:opacity-90"
+                    style={{ backgroundColor: isSigningIn ? '#9CA3AF' : '#0891B2' }}
                   >
-                    {isSigningIn ? 'Signing in…' : 'Sign In'}
+                    {isSigningIn ? 'Signing in...' : 'Sign In →'}
                   </button>
-                  <p className="text-xs text-center" style={{ color: C.muted }}>
-                    New employee?{' '}
-                    <button onClick={() => setActiveTab('employee')} className="font-semibold underline" style={{ color: C.primary }}>
-                      Create your employee account
-                    </button>
-                  </p>
                 </form>
-              )}
+                <p className="text-xs text-center mt-6" style={{ color: '#9CA3AF' }}>
+                  New employee?{' '}
+                  <button onClick={() => setActiveTab('employee')} className="font-semibold underline" style={{ color: '#0891B2' }}>
+                    Create your employee account
+                  </button>
+                </p>
+              </>
+            )}
 
-              {/* ── EMPLOYEE SIGN UP ── */}
-              {activeTab === 'employee' && (
+            {/* ── EMPLOYEE SIGN UP TAB ── */}
+            {activeTab === 'employee' && (
+              <>
+                <div className="mb-6">
+                  <h1 className="text-2xl font-bold" style={{ color: '#1F2937' }}>Create your employee account</h1>
+                  <p className="text-sm mt-1" style={{ color: '#6B7280' }}>
+                    Your organization must already have a Dedicated Emailing account. Enter your organization code to join.
+                  </p>
+                </div>
                 <form onSubmit={handleEmpSubmit} className="space-y-4">
+                  {/* Name row */}
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm font-medium mb-1" style={{ color: C.navy }}>First Name *</label>
+                      <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>First Name *</label>
                       <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: C.muted }} />
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
                         <input
                           type="text"
                           value={empData.firstName}
                           onChange={(e) => setEmpData({ ...empData, firstName: e.target.value })}
                           placeholder="Jane"
-                          className={`${inputBase} pl-9`}
-                          style={{ borderColor: empErrors.firstName ? '#DC5661' : C.border }}
+                          className={`${inputClass(empErrors.firstName)} pl-9`}
+                          style={{ borderColor: empErrors.firstName ? '#EF4444' : '#D1D5DB' }}
                         />
                       </div>
-                      {empErrors.firstName && <p className="text-xs mt-1" style={{ color: '#DC5661' }}>{empErrors.firstName}</p>}
+                      {empErrors.firstName && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.firstName}</p>}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1" style={{ color: C.navy }}>Last Name *</label>
+                      <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Last Name *</label>
                       <input
                         type="text"
                         value={empData.lastName}
                         onChange={(e) => setEmpData({ ...empData, lastName: e.target.value })}
                         placeholder="Smith"
-                        className={inputBase}
-                        style={{ borderColor: empErrors.lastName ? '#DC5661' : C.border }}
+                        className={inputClass(empErrors.lastName)}
+                        style={{ borderColor: empErrors.lastName ? '#EF4444' : '#D1D5DB' }}
                       />
-                      {empErrors.lastName && <p className="text-xs mt-1" style={{ color: '#DC5661' }}>{empErrors.lastName}</p>}
+                      {empErrors.lastName && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.lastName}</p>}
                     </div>
                   </div>
 
+                  {/* Work email */}
                   <div>
-                    <label className="block text-sm font-medium mb-1" style={{ color: C.navy }}>Work Email *</label>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Work Email *</label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: C.muted }} />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
                       <input
                         type="email"
                         value={empData.workEmail}
                         onChange={(e) => setEmpData({ ...empData, workEmail: e.target.value })}
                         placeholder="jane@yourcompany.com"
-                        className={`${inputBase} pl-9`}
-                        style={{ borderColor: empErrors.workEmail ? '#DC5661' : C.border }}
+                        className={`${inputClass(empErrors.workEmail)} pl-9`}
+                        style={{ borderColor: empErrors.workEmail ? '#EF4444' : '#D1D5DB' }}
                       />
                     </div>
-                    {empErrors.workEmail && <p className="text-xs mt-1" style={{ color: '#DC5661' }}>{empErrors.workEmail}</p>}
+                    {empErrors.workEmail && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.workEmail}</p>}
                   </div>
 
+                  {/* Organization code */}
                   <div>
-                    <label className="block text-sm font-medium mb-1" style={{ color: C.navy }}>Organization Code *</label>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Organization Code *</label>
                     <div className="relative">
-                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: C.muted }} />
+                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
                       <input
                         type="text"
                         value={empData.orgCode}
                         onChange={(e) => setEmpData({ ...empData, orgCode: e.target.value })}
                         placeholder="e.g. ACME-2026"
-                        className={`${inputBase} pl-9`}
-                        style={{ borderColor: empErrors.orgCode ? '#DC5661' : C.border }}
+                        className={`${inputClass(empErrors.orgCode)} pl-9`}
+                        style={{ borderColor: empErrors.orgCode ? '#EF4444' : '#D1D5DB' }}
                       />
                     </div>
-                    {empErrors.orgCode && <p className="text-xs mt-1" style={{ color: '#DC5661' }}>{empErrors.orgCode}</p>}
-                    <p className="text-xs mt-1" style={{ color: C.muted }}>Ask your HR or IT admin for your organization code.</p>
+                    {empErrors.orgCode && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.orgCode}</p>}
+                    <p className="text-xs mt-1" style={{ color: '#9CA3AF' }}>Ask your HR or IT admin for your organization code.</p>
                   </div>
 
+                  {/* Phone (optional, for SMS opt-in) */}
                   <div>
-                    <label className="block text-sm font-medium mb-1" style={{ color: C.navy }}>
-                      Mobile Phone <span style={{ color: C.muted }}>(optional)</span>
-                    </label>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Mobile Phone <span style={{ color: '#9CA3AF' }}>(optional)</span></label>
                     <input
                       type="tel"
                       value={empData.phone}
                       onChange={(e) => setEmpData({ ...empData, phone: e.target.value })}
                       placeholder="+1 (555) 000-0000"
-                      className={inputBase}
-                      style={{ borderColor: C.border }}
+                      className={inputClass()}
+                      style={{ borderColor: '#D1D5DB' }}
                     />
+                    <p className="text-xs mt-1" style={{ color: '#9CA3AF' }}>Used for SMS notifications if you choose to opt in on the next step.</p>
                   </div>
 
+                  {/* Password */}
                   <div>
-                    <label className="block text-sm font-medium mb-1" style={{ color: C.navy }}>Password *</label>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Password *</label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: C.muted }} />
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
                       <input
                         type="password"
                         value={empData.password}
                         onChange={(e) => setEmpData({ ...empData, password: e.target.value })}
                         placeholder="Min. 8 characters"
-                        className={`${inputBase} pl-9`}
-                        style={{ borderColor: empErrors.password ? '#DC5661' : C.border }}
+                        className={`${inputClass(empErrors.password)} pl-9`}
+                        style={{ borderColor: empErrors.password ? '#EF4444' : '#D1D5DB' }}
                       />
                     </div>
-                    {empErrors.password && <p className="text-xs mt-1" style={{ color: '#DC5661' }}>{empErrors.password}</p>}
+                    {empErrors.password && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.password}</p>}
                   </div>
 
+                  {/* Confirm password */}
                   <div>
-                    <label className="block text-sm font-medium mb-1" style={{ color: C.navy }}>Confirm Password *</label>
+                    <label className="block text-sm font-medium mb-1" style={{ color: '#374151' }}>Confirm Password *</label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: C.muted }} />
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#9CA3AF' }} />
                       <input
                         type="password"
                         value={empData.confirmPassword}
                         onChange={(e) => setEmpData({ ...empData, confirmPassword: e.target.value })}
                         placeholder="Re-enter password"
-                        className={`${inputBase} pl-9`}
-                        style={{ borderColor: empErrors.confirmPassword ? '#DC5661' : C.border }}
+                        className={`${inputClass(empErrors.confirmPassword)} pl-9`}
+                        style={{ borderColor: empErrors.confirmPassword ? '#EF4444' : '#D1D5DB' }}
                       />
                     </div>
-                    {empErrors.confirmPassword && <p className="text-xs mt-1" style={{ color: '#DC5661' }}>{empErrors.confirmPassword}</p>}
+                    {empErrors.confirmPassword && <p className="text-xs mt-1" style={{ color: '#EF4444' }}>{empErrors.confirmPassword}</p>}
                   </div>
 
+                  {/* Terms */}
                   <div className="flex items-start gap-3 pt-1">
-                    <input type="checkbox" id="empTerms" required className="mt-1 w-4 h-4 flex-shrink-0" style={{ accentColor: C.primary }} />
-                    <label htmlFor="empTerms" className="text-xs" style={{ color: C.slate }}>
+                    <input type="checkbox" id="empTerms" required className="mt-1 w-4 h-4 flex-shrink-0" style={{ accentColor: '#0891B2' }} />
+                    <label htmlFor="empTerms" className="text-xs" style={{ color: '#6B7280' }}>
                       I agree to the{' '}
-                      <Link href="/terms" className="underline" style={{ color: C.primary }}>Terms of Service</Link>
+                      <Link href="/terms" className="underline" style={{ color: '#0891B2' }}>Terms of Service</Link>
                       {' '}and{' '}
-                      <Link href="/privacy" className="underline" style={{ color: C.primary }}>Privacy Policy</Link>. *
+                      <Link href="/privacy" className="underline" style={{ color: '#0891B2' }}>Privacy Policy</Link>. *
                     </label>
                   </div>
 
                   <button
                     type="submit"
                     disabled={isCreating}
-                    className="w-full py-3 text-white font-semibold rounded-md text-sm transition-opacity hover:opacity-90 flex items-center justify-center gap-2"
-                    style={{ backgroundColor: isCreating ? C.muted : C.primary }}
+                    className="w-full py-3 text-white font-semibold rounded-lg transition-opacity hover:opacity-90 flex items-center justify-center gap-2"
+                    style={{ backgroundColor: isCreating ? '#9CA3AF' : '#0891B2' }}
                   >
-                    {isCreating ? 'Creating account…' : (<>Create Account <ArrowRight className="w-4 h-4" /></>)}
+                    {isCreating ? 'Creating account...' : (<>Create Account & Set Preferences <ArrowRight className="w-4 h-4" /></>)}
                   </button>
 
-                  <p className="text-xs text-center" style={{ color: C.muted }}>
-                    Already have an account?{' '}
-                    <button onClick={() => setActiveTab('signin')} className="font-semibold underline" style={{ color: C.primary }}>
-                      Sign in
-                    </button>
+                  <p className="text-xs text-center" style={{ color: '#9CA3AF' }}>
+                    You&apos;ll choose your notification preferences on the next step.
                   </p>
                 </form>
-              )}
-            </div>
+                <p className="text-xs text-center mt-4" style={{ color: '#9CA3AF' }}>
+                  Already have an account?{' '}
+                  <button onClick={() => setActiveTab('signin')} className="font-semibold underline" style={{ color: '#0891B2' }}>
+                    Sign in
+                  </button>
+                </p>
+              </>
+            )}
           </div>
         </div>
-      </section>
+      </div>
 
       <Footer />
     </div>
