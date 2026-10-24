@@ -128,7 +128,7 @@ export default function ProductDemoPage() {
 
             {/* ── Left Sidebar ── */}
             <aside className="w-56 flex-shrink-0 border-r flex flex-col"
-              style={{ backgroundColor: C.card, borderColor: C.border }}>
+              style={{ backgroundColor: C.card, borderColor: C.border, position: 'relative', zIndex: 1 }}>
               {/* Logo area */}
               <div className="px-4 py-4 border-b" style={{ borderColor: C.border }}>
                 <div className="flex items-center gap-2">
