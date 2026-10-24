@@ -1,11 +1,8 @@
-'use client';
-
 import Link from 'next/link';
-import Image from 'next/image';
 import {
-  LayoutDashboard, Send, Monitor, Smartphone, CheckSquare, BarChart3,
-  Users, Settings, Bell, Search, ChevronRight, ArrowUpRight, Lock,
-  Mail, TrendingUp, AlertCircle, Clock, ChevronDown
+  Mail, Monitor, Smartphone, Bell, CheckSquare, BarChart3,
+  Users, Send, Shield, ArrowRight, ChevronRight, TrendingUp,
+  FileText, Settings, Clock, AlertCircle
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -13,7 +10,6 @@ import Footer from '../components/Footer';
 // ─── Design tokens ────────────────────────────────────────────────────
 const C = {
   primary:      '#0795B7',
-  primaryHover: '#087F9D',
   primaryLight: '#E4F8FB',
   navy:         '#17283B',
   slate:        '#617488',
@@ -26,471 +22,447 @@ const C = {
   error:        '#DC5661',
 };
 
-// ─── Sidebar nav items ────────────────────────────────────────────────
-const navItems = [
-  { icon: LayoutDashboard, label: 'Overview',        active: true },
-  { icon: Send,            label: 'Campaigns',       active: false },
-  { icon: Users,           label: 'Employees',       active: false },
-  { icon: BarChart3,       label: 'Analytics',       active: false },
-  { icon: CheckSquare,     label: 'Acknowledgments', active: false },
-];
-
-// ─── KPI cards ────────────────────────────────────────────────────────
-const kpis = [
-  { label: 'Messages Sent',      value: '14,820', delta: '+8% vs last month', color: C.primary,  icon: Send },
-  { label: 'Delivery Rate',      value: '99.1%',  delta: 'All channels',      color: C.success,  icon: TrendingUp },
-  { label: 'Acknowledgment Rate',value: '87%',    delta: 'Critical notices',  color: C.primary,  icon: CheckSquare },
-  { label: 'Avg Open Rate',      value: '71%',    delta: 'vs 21% industry',   color: C.success,  icon: BarChart3 },
-];
-
-// ─── Recent announcements ─────────────────────────────────────────────
-const announcements = [
-  { name: 'Q4 All-Hands Meeting — Oct 28',  channels: 'Email · Intranet', sent: '1,240', ack: '89%', status: 'Sent',      statusColor: C.success },
-  { name: 'Open Enrollment Reminder',        channels: 'Email · SMS',      sent: '1,240', ack: '94%', status: 'Sent',      statusColor: C.success },
-  { name: 'IT Security Policy Update',       channels: 'Email · Intranet · SMS', sent: '1,240', ack: '76%', status: 'Pending Ack', statusColor: C.warning },
-  { name: 'Office Closure — Nov 11',         channels: 'Email · Intranet', sent: '—',     ack: '—',   status: 'Scheduled', statusColor: C.primary },
-];
-
-// ─── Channel performance bars ─────────────────────────────────────────
-const channels = [
-  { label: 'Email',    icon: Mail,       open: 71, ack: 89, color: C.primary },
-  { label: 'Intranet', icon: Monitor,    open: 64, ack: 82, color: C.primary },
-  { label: 'SMS',      icon: Smartphone, open: 94, ack: 91, color: C.success },
-];
-
-function StatusBadge({ label, color }: { label: string; color: string }) {
+function Badge({ label, color = C.primary }: { label: string; color?: string }) {
   return (
-    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold"
+    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
       style={{ backgroundColor: color + '18', color }}>
       {label}
     </span>
   );
 }
 
-function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+function FeatureCard({ icon: Icon, title, desc, bullets }: {
+  icon: React.ElementType; title: string; desc: string; bullets: string[];
+}) {
   return (
-    <div className={`rounded-xl border ${className}`}
-      style={{ backgroundColor: C.card, borderColor: C.border }}>
-      {children}
+    <div className="rounded-2xl p-6 border" style={{ backgroundColor: C.card, borderColor: C.border }}>
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+        style={{ backgroundColor: C.primaryLight }}>
+        <Icon className="w-5 h-5" style={{ color: C.primary }} />
+      </div>
+      <h3 className="text-base font-semibold mb-2" style={{ color: C.navy }}>{title}</h3>
+      <p className="text-sm mb-4 leading-relaxed" style={{ color: C.slate }}>{desc}</p>
+      <ul className="space-y-1.5">
+        {bullets.map((b) => (
+          <li key={b} className="flex items-start gap-2 text-sm" style={{ color: C.slate }}>
+            <CheckSquare className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: C.primary }} />
+            {b}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-function CardHeader({ title, action }: { title: string; action?: React.ReactNode }) {
-  return (
-    <div className="flex items-center justify-between px-5 py-3.5 border-b" style={{ borderColor: C.border }}>
-      <span className="text-sm font-semibold" style={{ color: C.navy }}>{title}</span>
-      {action}
-    </div>
-  );
-}
-
-export default function ProductDemoPage() {
+export default function FeaturesPage() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#FFFFFF' }}>
       <Navbar />
 
-      {/* ── App Shell ── */}
-      <div className="border-b" style={{ borderColor: C.border, backgroundColor: C.appBg }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="flex" style={{ minHeight: '680px' }}>
+      {/* ── Hero ── */}
+      <section className="py-20" style={{ backgroundColor: C.appBg }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Badge label="Platform Features" />
+          <h1 className="text-5xl font-bold mt-4 mb-4 leading-tight" style={{ color: C.navy }}>
+            Every channel your employees use.<br />
+            <span style={{ color: C.primary }}>One platform to manage them all.</span>
+          </h1>
+          <p className="text-xl max-w-2xl mx-auto mb-8" style={{ color: C.slate }}>
+            Dedicated Emailing gives HR, IT, and leadership teams a single place to send, track, and confirm internal communications — across email, intranet, and SMS.
+          </p>
+          <div className="flex justify-center gap-3 flex-wrap mb-10">
+            {[
+              { icon: Mail,       label: 'Email' },
+              { icon: Monitor,    label: 'Intranet' },
+              { icon: Smartphone, label: 'SMS' },
+              { icon: Bell,       label: 'Push Alerts' },
+            ].map((c) => (
+              <div key={c.label} className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border"
+                style={{ backgroundColor: C.card, color: C.primary, borderColor: C.border }}>
+                <c.icon className="w-4 h-4" />
+                {c.label}
+              </div>
+            ))}
+          </div>
+          <Link href="/demo"
+            className="inline-flex items-center gap-2 px-8 py-3.5 text-white font-semibold rounded-lg transition-opacity hover:opacity-90"
+            style={{ backgroundColor: C.primary }}>
+            Book a Demo
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
 
-            {/* ── Left Sidebar ── */}
-            <aside className="w-56 flex-shrink-0 border-r flex flex-col"
-              style={{ backgroundColor: C.card, borderColor: C.border, position: 'relative', zIndex: 1 }}>
-              {/* Logo area */}
-              <div className="px-4 py-4 border-b" style={{ borderColor: C.border }}>
+      {/* ── Dashboard product snippet ── */}
+      <section className="py-16 border-y" style={{ borderColor: C.border }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-3" style={{ color: C.navy }}>
+              A communications dashboard built for operations teams
+            </h2>
+            <p className="text-lg" style={{ color: C.slate }}>
+              See delivery rates, open rates, and acknowledgment status across every channel — in one view.
+            </p>
+          </div>
+
+          {/* Dashboard mockup */}
+          <div className="rounded-2xl overflow-hidden border shadow-2xl" style={{ borderColor: C.border }}>
+            {/* Browser bar */}
+            <div className="flex items-center gap-2 px-4 py-3" style={{ backgroundColor: C.navy }}>
+              <div className="w-3 h-3 rounded-full bg-red-400" />
+              <div className="w-3 h-3 rounded-full bg-yellow-400" />
+              <div className="w-3 h-3 rounded-full bg-green-400" />
+              <div className="ml-4 flex-1 rounded px-3 py-1 text-xs" style={{ backgroundColor: '#0E2233', color: C.muted }}>
+                app.dedicatedemailing.com/dashboard
+              </div>
+            </div>
+
+            {/* App content */}
+            <div style={{ backgroundColor: C.appBg }}>
+              {/* Top bar */}
+              <div className="flex items-center justify-between px-6 py-3 border-b" style={{ backgroundColor: C.card, borderColor: C.border }}>
+                <div className="text-sm font-semibold" style={{ color: C.navy }}>Communications Overview</div>
                 <div className="flex items-center gap-2">
-                  <Image src="/favicon.png" alt="Dedicated Emailing" width={28} height={28} className="rounded" />
-                  <span className="text-sm font-semibold" style={{ color: C.navy }}>Dedicated Emailing</span>
-                </div>
-              </div>
-
-              {/* Nav */}
-              <nav className="flex-1 px-3 py-4 space-y-0.5">
-                <p className="px-2 mb-2 text-xs font-semibold uppercase tracking-widest" style={{ color: C.muted }}>Workspace</p>
-                {navItems.map((item) => (
-                  <div key={item.label}
-                    className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg cursor-default text-sm font-medium transition-colors"
-                    style={{
-                      backgroundColor: item.active ? C.primaryLight : 'transparent',
-                      color: item.active ? C.primary : C.slate,
-                    }}>
-                    <item.icon className="w-4 h-4 flex-shrink-0" />
-                    {item.label}
-                  </div>
-                ))}
-                <div className="pt-4">
-                  <p className="px-2 mb-2 text-xs font-semibold uppercase tracking-widest" style={{ color: C.muted }}>Administration</p>
-                  <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg cursor-default text-sm font-medium"
-                    style={{ color: C.slate }}>
-                    <Settings className="w-4 h-4 flex-shrink-0" />
-                    Settings
-                  </div>
-                </div>
-              </nav>
-
-              {/* Org footer */}
-              <div className="px-3 py-3 border-t" style={{ borderColor: C.border }}>
-                <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg cursor-default"
-                  style={{ backgroundColor: C.appBg }}>
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-                    style={{ backgroundColor: C.primary }}>A</div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-semibold truncate" style={{ color: C.navy }}>Acme Corp</div>
-                    <div className="text-xs truncate" style={{ color: C.muted }}>1,240 employees</div>
-                  </div>
-                  <ChevronDown className="w-3 h-3 flex-shrink-0" style={{ color: C.muted }} />
-                </div>
-              </div>
-            </aside>
-
-            {/* ── Main Content ── */}
-            <div className="flex-1 flex flex-col min-w-0">
-
-              {/* Top Header */}
-              <header className="h-14 flex items-center justify-between px-6 border-b flex-shrink-0"
-                style={{ backgroundColor: C.card, borderColor: C.border }}>
-                <div className="flex items-center gap-1.5 text-sm" style={{ color: C.muted }}>
-                  <span>Workspace</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                  <span className="font-medium" style={{ color: C.navy }}>Overview</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border text-sm"
-                    style={{ borderColor: C.border, color: C.muted, backgroundColor: C.appBg }}>
-                    <Search className="w-3.5 h-3.5" />
-                    <span>Search...</span>
-                  </div>
-                  <div className="relative">
-                    <Bell className="w-4.5 h-4.5" style={{ color: C.slate }} />
-                    <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ backgroundColor: C.error }} />
-                  </div>
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                    style={{ backgroundColor: C.primary }}>JD</div>
-                </div>
-              </header>
-
-              {/* Page content */}
-              <div className="flex-1 p-6 overflow-auto" style={{ backgroundColor: C.appBg }}>
-
-                {/* Page title + CTA */}
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h2 className="text-xl font-bold" style={{ color: C.navy }}>Communications Overview</h2>
-                    <p className="text-sm mt-0.5" style={{ color: C.muted }}>October 2026 · All Departments</p>
-                  </div>
-                  <button className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  <span className="text-xs" style={{ color: C.muted }}>October 2026 · All Departments</span>
+                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white"
                     style={{ backgroundColor: C.primary }}>
-                    <Send className="w-3.5 h-3.5" />
-                    Create Announcement
+                    <Send className="w-3 h-3" /> Create Announcement
                   </button>
                 </div>
+              </div>
 
+              <div className="p-5">
                 {/* KPI row */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
-                  {kpis.map((k) => (
-                    <Card key={k.label} className="p-4">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                          style={{ backgroundColor: k.color + '15' }}>
-                          <k.icon className="w-4 h-4" style={{ color: k.color }} />
-                        </div>
-                        <ArrowUpRight className="w-3.5 h-3.5" style={{ color: C.muted }} />
-                      </div>
-                      <div className="text-2xl font-bold mb-0.5" style={{ color: C.navy }}>{k.value}</div>
-                      <div className="text-xs font-medium mb-0.5" style={{ color: C.slate }}>{k.label}</div>
-                      <div className="text-xs" style={{ color: k.color }}>{k.delta}</div>
-                    </Card>
+                <div className="grid grid-cols-4 gap-3 mb-4">
+                  {[
+                    { label: 'Messages Sent', value: '14,820', delta: '+8%', color: C.primary },
+                    { label: 'Delivery Rate',  value: '99.1%',  delta: 'All channels', color: C.success },
+                    { label: 'Acknowledgment Rate', value: '87%', delta: 'Critical notices', color: C.primary },
+                    { label: 'Avg Open Rate', value: '71%', delta: 'vs 21% industry', color: C.success },
+                  ].map((k) => (
+                    <div key={k.label} className="rounded-xl p-3 border" style={{ backgroundColor: C.card, borderColor: C.border }}>
+                      <div className="text-xl font-bold" style={{ color: k.color }}>{k.value}</div>
+                      <div className="text-xs font-medium mt-0.5" style={{ color: C.navy }}>{k.label}</div>
+                      <div className="text-xs mt-0.5" style={{ color: k.color }}>{k.delta}</div>
+                    </div>
                   ))}
                 </div>
 
-                {/* Main grid */}
-                <div className="grid lg:grid-cols-3 gap-4">
-
-                  {/* Announcements table — 2/3 */}
-                  <div className="lg:col-span-2">
-                    <Card>
-                      <CardHeader
-                        title="Recent Announcements"
-                        action={
-                          <Link href="/demo" className="text-xs font-medium flex items-center gap-1"
-                            style={{ color: C.primary }}>
-                            View all <ChevronRight className="w-3 h-3" />
-                          </Link>
-                        }
-                      />
-                      <div className="divide-y" style={{ borderColor: C.border }}>
-                        {/* Table header */}
-                        <div className="grid grid-cols-12 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider"
-                          style={{ color: C.muted }}>
-                          <div className="col-span-5">Announcement</div>
-                          <div className="col-span-2 text-center">Channels</div>
-                          <div className="col-span-2 text-center">Sent</div>
-                          <div className="col-span-1 text-center">Ack</div>
-                          <div className="col-span-2 text-right">Status</div>
-                        </div>
-                        {announcements.map((row) => (
-                          <div key={row.name} className="grid grid-cols-12 items-center px-5 py-3 hover:bg-gray-50 transition-colors">
-                            <div className="col-span-5">
-                              <div className="text-sm font-medium truncate" style={{ color: C.navy }}>{row.name}</div>
-                              <div className="text-xs mt-0.5" style={{ color: C.muted }}>{row.channels}</div>
-                            </div>
-                            <div className="col-span-2 flex justify-center gap-1">
-                              {row.channels.includes('Email') && <Mail className="w-3.5 h-3.5" style={{ color: C.muted }} />}
-                              {row.channels.includes('Intranet') && <Monitor className="w-3.5 h-3.5" style={{ color: C.muted }} />}
-                              {row.channels.includes('SMS') && <Smartphone className="w-3.5 h-3.5" style={{ color: C.muted }} />}
-                            </div>
-                            <div className="col-span-2 text-center text-sm" style={{ color: C.slate }}>{row.sent}</div>
-                            <div className="col-span-1 text-center text-sm font-semibold" style={{ color: row.ack !== '—' ? C.success : C.muted }}>{row.ack}</div>
-                            <div className="col-span-2 flex justify-end">
-                              <StatusBadge label={row.status} color={row.statusColor} />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </Card>
+                {/* Table */}
+                <div className="rounded-xl overflow-hidden border" style={{ backgroundColor: C.card, borderColor: C.border }}>
+                  <div className="grid grid-cols-12 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider border-b"
+                    style={{ color: C.muted, borderColor: C.border }}>
+                    <div className="col-span-5">Announcement</div>
+                    <div className="col-span-2 text-center">Channels</div>
+                    <div className="col-span-2 text-center">Sent</div>
+                    <div className="col-span-1 text-center">Ack</div>
+                    <div className="col-span-2 text-right">Status</div>
                   </div>
-
-                  {/* Right column — 1/3 */}
-                  <div className="space-y-4">
-
-                    {/* Channel performance */}
-                    <Card>
-                      <CardHeader title="Channel Performance" />
-                      <div className="p-5 space-y-4">
-                        {channels.map((ch) => (
-                          <div key={ch.label}>
-                            <div className="flex items-center justify-between mb-1.5">
-                              <div className="flex items-center gap-1.5">
-                                <ch.icon className="w-3.5 h-3.5" style={{ color: ch.color }} />
-                                <span className="text-sm font-medium" style={{ color: C.navy }}>{ch.label}</span>
-                              </div>
-                              <span className="text-xs font-semibold" style={{ color: ch.color }}>{ch.open}% open</span>
-                            </div>
-                            <div className="h-1.5 rounded-full mb-1" style={{ backgroundColor: C.border }}>
-                              <div className="h-1.5 rounded-full transition-all" style={{ width: `${ch.open}%`, backgroundColor: ch.color }} />
-                            </div>
-                            <div className="text-xs" style={{ color: C.muted }}>{ch.ack}% acknowledged</div>
-                          </div>
-                        ))}
+                  {[
+                    { name: 'Q4 All-Hands Meeting — Oct 28', ch: 'Email · Intranet', sent: '1,240', ack: '89%', status: 'Sent', sc: C.success },
+                    { name: 'Open Enrollment Reminder', ch: 'Email · SMS', sent: '1,240', ack: '94%', status: 'Sent', sc: C.success },
+                    { name: 'IT Security Policy Update', ch: 'Email · Intranet · SMS', sent: '1,240', ack: '76%', status: 'Pending Ack', sc: C.warning },
+                    { name: 'Office Closure — Nov 11', ch: 'Email · Intranet', sent: '—', ack: '—', status: 'Scheduled', sc: C.primary },
+                  ].map((row, i) => (
+                    <div key={row.name} className="grid grid-cols-12 items-center px-4 py-3 border-t"
+                      style={{ borderColor: C.border, backgroundColor: i % 2 === 0 ? C.card : C.appBg }}>
+                      <div className="col-span-5">
+                        <div className="text-sm font-medium" style={{ color: C.navy }}>{row.name}</div>
+                        <div className="text-xs mt-0.5" style={{ color: C.muted }}>{row.ch}</div>
                       </div>
-                    </Card>
-
-                    {/* Acknowledgment tracker */}
-                    <Card>
-                      <CardHeader title="Acknowledgment Tracker" />
-                      <div className="p-5">
-                        <div className="mb-3">
-                          <div className="flex items-center justify-between mb-1.5">
-                            <span className="text-xs font-medium" style={{ color: C.navy }}>IT Security Policy</span>
-                            <span className="text-xs font-bold" style={{ color: C.success }}>76%</span>
-                          </div>
-                          <div className="h-2 rounded-full" style={{ backgroundColor: C.border }}>
-                            <div className="h-2 rounded-full" style={{ width: '76%', backgroundColor: C.success }} />
-                          </div>
-                          <div className="text-xs mt-1" style={{ color: C.muted }}>942 of 1,240 confirmed · 298 pending</div>
-                        </div>
-                        <div className="space-y-2 mt-4">
-                          {[
-                            { name: 'Sarah M.', dept: 'Engineering', ok: true,  time: '2 min ago' },
-                            { name: 'James T.', dept: 'HR',          ok: true,  time: '5 min ago' },
-                            { name: 'Priya K.', dept: 'Finance',     ok: false, time: 'Pending' },
-                            { name: 'Marcus L.',dept: 'Sales',       ok: false, time: 'Pending' },
-                          ].map((emp) => (
-                            <div key={emp.name} className="flex items-center justify-between py-1.5 border-t" style={{ borderColor: C.border }}>
-                              <div>
-                                <div className="text-xs font-medium" style={{ color: C.navy }}>{emp.name}</div>
-                                <div className="text-xs" style={{ color: C.muted }}>{emp.dept}</div>
-                              </div>
-                              <div className="text-right">
-                                <div className="text-xs font-medium" style={{ color: emp.ok ? C.success : C.warning }}>
-                                  {emp.ok ? 'Acknowledged' : 'Pending'}
-                                </div>
-                                <div className="text-xs" style={{ color: C.muted }}>{emp.time}</div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+                      <div className="col-span-2 flex justify-center gap-1">
+                        {row.ch.includes('Email') && <Mail className="w-3.5 h-3.5" style={{ color: C.muted }} />}
+                        {row.ch.includes('Intranet') && <Monitor className="w-3.5 h-3.5" style={{ color: C.muted }} />}
+                        {row.ch.includes('SMS') && <Smartphone className="w-3.5 h-3.5" style={{ color: C.muted }} />}
                       </div>
-                    </Card>
-
-                    {/* CTA card */}
-                    <div className="rounded-xl p-5 text-center" style={{ backgroundColor: C.navy }}>
-                      <Lock className="w-6 h-6 text-white mx-auto mb-2" />
-                      <h3 className="text-sm font-bold text-white mb-1">Unlock Full Platform</h3>
-                      <p className="text-xs mb-3" style={{ color: '#8BA3B8' }}>
-                        Book a 30-min demo to see email, intranet, and SMS working together with your own data.
-                      </p>
-                      <Link href="/demo"
-                        className="block w-full py-2 text-white font-semibold rounded-lg text-sm transition-opacity hover:opacity-90"
-                        style={{ backgroundColor: C.primary }}>
-                        Book a Demo
-                      </Link>
+                      <div className="col-span-2 text-center text-sm" style={{ color: C.slate }}>{row.sent}</div>
+                      <div className="col-span-1 text-center text-sm font-semibold" style={{ color: row.ack !== '—' ? C.success : C.muted }}>{row.ack}</div>
+                      <div className="col-span-2 flex justify-end">
+                        <span className="px-2 py-0.5 rounded-full text-xs font-semibold"
+                          style={{ backgroundColor: row.sc + '18', color: row.sc }}>{row.status}</span>
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                {/* ── Feature deep-dives ── */}
-                <div className="mt-10 space-y-10">
-
-                  {/* Email */}
-                  <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div>
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mb-4"
-                        style={{ backgroundColor: C.primaryLight, color: C.primary }}>
-                        <Mail className="w-3 h-3" /> Email
-                      </div>
-                      <h2 className="text-2xl font-bold mb-3" style={{ color: C.navy }}>Dedicated email that actually gets read</h2>
-                      <p className="text-sm mb-4 leading-relaxed" style={{ color: C.slate }}>
-                        Send branded company announcements, HR notices, and compliance updates via email — with real-time delivery tracking, open rates, and acknowledgment confirmation.
-                      </p>
-                      <ul className="space-y-2">
-                        {['Drag-and-drop email composer with templates', 'Delivery and open rate tracking per message', 'Acknowledgment-required emails for compliance', 'Automated follow-up to non-openers', 'Syncs with your HR directory or HRIS'].map((b) => (
-                          <li key={b} className="flex items-center gap-2 text-sm" style={{ color: C.slate }}>
-                            <CheckSquare className="w-4 h-4 flex-shrink-0" style={{ color: C.primary }} />
-                            {b}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <Card>
-                      <div className="px-4 py-2.5 border-b flex items-center justify-between" style={{ borderColor: C.border }}>
-                        <span className="text-sm font-semibold" style={{ color: C.navy }}>Q4 All-Hands Meeting</span>
-                        <StatusBadge label="Sent" color={C.success} />
-                      </div>
-                      <div className="p-4">
-                        <div className="grid grid-cols-3 gap-3 mb-4">
-                          {[
-                            { label: 'Delivered', value: '1,240', color: C.success },
-                            { label: 'Opened',    value: '71%',   color: C.primary },
-                            { label: 'Acknowledged', value: '89%', color: C.primary },
-                          ].map((m) => (
-                            <div key={m.label} className="text-center p-2.5 rounded-lg" style={{ backgroundColor: C.appBg }}>
-                              <div className="text-base font-bold" style={{ color: m.color }}>{m.value}</div>
-                              <div className="text-xs mt-0.5" style={{ color: C.muted }}>{m.label}</div>
-                            </div>
-                          ))}
-                        </div>
-                        <div className="rounded-lg p-3" style={{ backgroundColor: C.primaryLight, border: `1px solid ${C.border}` }}>
-                          <div className="text-xs font-semibold mb-1.5" style={{ color: C.primary }}>Acknowledgment Progress</div>
-                          <div className="h-2 rounded-full mb-1.5" style={{ backgroundColor: C.border }}>
-                            <div className="h-2 rounded-full" style={{ width: '89%', backgroundColor: C.success }} />
-                          </div>
-                          <div className="text-xs" style={{ color: C.slate }}>1,104 of 1,240 confirmed · 136 pending · Auto-reminder sent</div>
-                        </div>
-                      </div>
-                    </Card>
-                  </div>
-
-                  {/* Intranet */}
-                  <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <Card className="order-2 md:order-1">
-                      <div className="px-4 py-2.5 border-b" style={{ borderColor: C.border }}>
-                        <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: C.muted }}>Pinned Announcements</span>
-                      </div>
-                      <div className="p-4 space-y-2">
-                        {[
-                          { title: 'Q4 All-Hands — Agenda and Zoom Link', dept: 'Leadership', views: '1,102', badge: 'Pinned',          badgeColor: C.primary },
-                          { title: 'Open Enrollment Closes Nov 15',        dept: 'HR · Benefits', views: '987', badge: 'Action Required', badgeColor: C.warning },
-                          { title: 'New IT Security Policy — Please Read', dept: 'IT',          views: '743', badge: 'Ack Required',    badgeColor: C.error },
-                        ].map((post) => (
-                          <div key={post.title} className="flex items-start justify-between p-3 rounded-lg border"
-                            style={{ backgroundColor: C.appBg, borderColor: C.border }}>
-                            <div className="flex-1 min-w-0 mr-2">
-                              <div className="text-sm font-medium truncate" style={{ color: C.navy }}>{post.title}</div>
-                              <div className="text-xs mt-0.5" style={{ color: C.muted }}>{post.dept} · {post.views} views</div>
-                            </div>
-                            <StatusBadge label={post.badge} color={post.badgeColor} />
-                          </div>
-                        ))}
-                      </div>
-                    </Card>
-                    <div className="order-1 md:order-2">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mb-4"
-                        style={{ backgroundColor: C.primaryLight, color: C.primary }}>
-                        <Monitor className="w-3 h-3" /> Intranet Messaging
-                      </div>
-                      <h2 className="text-2xl font-bold mb-3" style={{ color: C.navy }}>A company feed your employees actually check</h2>
-                      <p className="text-sm mb-4 leading-relaxed" style={{ color: C.slate }}>
-                        Post announcements directly to your company intranet feed — pinned, categorized, and searchable. Employees see what matters most, and you see who's engaged.
-                      </p>
-                      <ul className="space-y-2">
-                        {['Pinned and prioritized announcement feed', 'Department and role-based targeting', 'Post alongside email for maximum reach', 'View counts and engagement tracking', 'Acknowledgment-required posts with audit trail'].map((b) => (
-                          <li key={b} className="flex items-center gap-2 text-sm" style={{ color: C.slate }}>
-                            <CheckSquare className="w-4 h-4 flex-shrink-0" style={{ color: C.primary }} />
-                            {b}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  {/* SMS */}
-                  <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div>
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mb-4"
-                        style={{ backgroundColor: C.primaryLight, color: C.primary }}>
-                        <Smartphone className="w-3 h-3" /> SMS
-                      </div>
-                      <h2 className="text-2xl font-bold mb-3" style={{ color: C.navy }}>Reach every employee — even without email</h2>
-                      <p className="text-sm mb-4 leading-relaxed" style={{ color: C.slate }}>
-                        For urgent alerts, shift changes, and time-sensitive notices, SMS cuts through the noise. Send to your entire workforce or specific groups — with 99%+ delivery rates and opt-out compliance built in.
-                      </p>
-                      <ul className="space-y-2">
-                        {['Broadcast SMS to all employees or segments', '99%+ delivery rate with carrier-grade infrastructure', 'Opt-out management and compliance tracking', 'Urgent alert mode for time-sensitive notices', 'Combine with email for multi-channel reach'].map((b) => (
-                          <li key={b} className="flex items-center gap-2 text-sm" style={{ color: C.slate }}>
-                            <CheckSquare className="w-4 h-4 flex-shrink-0" style={{ color: C.primary }} />
-                            {b}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <Card>
-                      <div className="px-4 py-2.5 border-b flex items-center gap-2" style={{ borderColor: C.border }}>
-                        <AlertCircle className="w-4 h-4" style={{ color: C.warning }} />
-                        <span className="text-sm font-semibold" style={{ color: C.navy }}>Urgent Alert — All Employees</span>
-                      </div>
-                      <div className="p-4">
-                        <div className="rounded-lg p-3 mb-4 border" style={{ backgroundColor: '#FFF8EC', borderColor: '#F5D99A' }}>
-                          <div className="text-xs font-semibold mb-1" style={{ color: C.warning }}>Urgent — All Employees (1,240)</div>
-                          <div className="text-sm" style={{ color: C.navy }}>REMINDER: Open Enrollment closes Friday at 5pm. Complete your selections at benefits.company.com</div>
-                        </div>
-                        <div className="grid grid-cols-3 gap-3">
-                          {[
-                            { label: 'Delivered',      value: '1,237',  color: C.success },
-                            { label: 'Delivery Rate',  value: '99.8%',  color: C.success },
-                            { label: 'Opt-Outs',       value: '2',      color: C.muted },
-                          ].map((m) => (
-                            <div key={m.label} className="text-center p-2.5 rounded-lg" style={{ backgroundColor: C.appBg }}>
-                              <div className="text-base font-bold" style={{ color: m.color }}>{m.value}</div>
-                              <div className="text-xs mt-0.5" style={{ color: C.muted }}>{m.label}</div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </Card>
-                  </div>
-                </div>
-
-                {/* Bottom CTA */}
-                <div className="mt-10 rounded-2xl p-10 text-center" style={{ backgroundColor: C.navy }}>
-                  <h2 className="text-2xl font-bold text-white mb-3">See all channels working together</h2>
-                  <p className="text-sm mb-6 max-w-xl mx-auto" style={{ color: '#8BA3B8' }}>
-                    Book a 30-minute demo and we'll show you email, intranet, and SMS in action with your own employee data.
-                  </p>
-                  <Link href="/demo"
-                    className="inline-flex items-center gap-2 px-8 py-3 text-white font-semibold rounded-lg transition-opacity hover:opacity-90"
-                    style={{ backgroundColor: C.primary }}>
-                    Book a Demo
-                    <ChevronRight className="w-4 h-4" />
-                  </Link>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* ── Core features grid ── */}
+      <section className="py-20" style={{ backgroundColor: C.card }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl font-bold mb-3" style={{ color: C.navy }}>Everything you need to reach every employee</h2>
+            <p className="text-lg" style={{ color: C.slate }}>Built for HR, People Ops, IT, and Leadership teams.</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <FeatureCard
+              icon={Mail}
+              title="Email Broadcasts"
+              desc="Send branded company announcements with delivery tracking, open rates, and acknowledgment confirmation built in."
+              bullets={['Drag-and-drop email composer', 'Per-message delivery and open tracking', 'Acknowledgment-required emails', 'Automated follow-up to non-openers']}
+            />
+            <FeatureCard
+              icon={Monitor}
+              title="Intranet Feed"
+              desc="Post announcements to a pinned, prioritized company feed that employees actually check — with view counts and engagement data."
+              bullets={['Pinned and prioritized posts', 'Department and role targeting', 'View counts and engagement tracking', 'Acknowledgment-required posts']}
+            />
+            <FeatureCard
+              icon={Smartphone}
+              title="SMS Broadcast"
+              desc="Reach every employee instantly — including deskless and frontline workers — with 99%+ delivery rates and compliance built in."
+              bullets={['Broadcast to all employees or segments', '99%+ delivery rate', 'Opt-out management and compliance', 'Urgent alert mode']}
+            />
+            <FeatureCard
+              icon={CheckSquare}
+              title="Acknowledgment Tracking"
+              desc="Request confirmation that employees have read critical policies, compliance notices, and important updates — with a full audit trail."
+              bullets={['One-click employee acknowledgment', 'Real-time confirmation tracking', 'Automated reminders to non-responders', 'Compliance audit trail and exports']}
+            />
+            <FeatureCard
+              icon={BarChart3}
+              title="Engagement Analytics"
+              desc="See delivery rates, open rates, and acknowledgment rates across every channel and department — in one dashboard."
+              bullets={['Cross-channel analytics dashboard', 'Department-level engagement reports', 'Non-opener follow-up lists', 'Acknowledgment rate by team']}
+            />
+            <FeatureCard
+              icon={Users}
+              title="Employee Targeting"
+              desc="Send to your entire company or target specific departments, locations, and roles — synced directly from your HR directory."
+              bullets={['HR directory and HRIS sync', 'Target by department, location, or role', 'Custom employee segments', 'All-company broadcast']}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Channel deep-dives ── */}
+      <section className="py-20" style={{ backgroundColor: C.appBg }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+
+          {/* Email */}
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <Badge label="Email" />
+              <h2 className="text-3xl font-bold mt-4 mb-3" style={{ color: C.navy }}>
+                Dedicated email that actually gets read
+              </h2>
+              <p className="text-base mb-5 leading-relaxed" style={{ color: C.slate }}>
+                Unlike Outlook or Gmail, Dedicated Emailing shows you exactly who opened, clicked, and acknowledged every message — so you know your communications landed.
+              </p>
+              <ul className="space-y-2.5">
+                {['Drag-and-drop email composer with templates', 'Real-time delivery and open rate tracking', 'Acknowledgment-required emails for compliance', 'Automated follow-up to non-openers', 'Syncs with your HR directory or HRIS'].map((b) => (
+                  <li key={b} className="flex items-center gap-2.5 text-sm" style={{ color: C.slate }}>
+                    <CheckSquare className="w-4 h-4 flex-shrink-0" style={{ color: C.primary }} />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Email snippet */}
+            <div className="rounded-2xl overflow-hidden border shadow-lg" style={{ borderColor: C.border }}>
+              <div className="px-4 py-2.5 border-b flex items-center justify-between" style={{ borderColor: C.border, backgroundColor: C.card }}>
+                <span className="text-sm font-semibold" style={{ color: C.navy }}>Q4 All-Hands Meeting</span>
+                <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ backgroundColor: C.success + '18', color: C.success }}>Sent</span>
+              </div>
+              <div className="p-4" style={{ backgroundColor: C.card }}>
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  {[
+                    { label: 'Delivered', value: '1,240', color: C.success },
+                    { label: 'Opened',    value: '71%',   color: C.primary },
+                    { label: 'Acknowledged', value: '89%', color: C.primary },
+                  ].map((m) => (
+                    <div key={m.label} className="text-center p-3 rounded-xl" style={{ backgroundColor: C.appBg }}>
+                      <div className="text-lg font-bold" style={{ color: m.color }}>{m.value}</div>
+                      <div className="text-xs mt-0.5" style={{ color: C.muted }}>{m.label}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="rounded-xl p-3" style={{ backgroundColor: C.primaryLight, border: `1px solid ${C.border}` }}>
+                  <div className="text-xs font-semibold mb-1.5" style={{ color: C.primary }}>Acknowledgment Progress</div>
+                  <div className="h-2 rounded-full mb-1.5" style={{ backgroundColor: C.border }}>
+                    <div className="h-2 rounded-full" style={{ width: '89%', backgroundColor: C.success }} />
+                  </div>
+                  <div className="text-xs" style={{ color: C.slate }}>1,104 of 1,240 confirmed · 136 pending · Auto-reminder sent</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Intranet */}
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            {/* Intranet snippet */}
+            <div className="rounded-2xl overflow-hidden border shadow-lg order-2 md:order-1" style={{ borderColor: C.border }}>
+              <div className="px-4 py-2.5 border-b" style={{ borderColor: C.border, backgroundColor: C.card }}>
+                <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: C.muted }}>Company Feed — Pinned</span>
+              </div>
+              <div className="p-4 space-y-2.5" style={{ backgroundColor: C.card }}>
+                {[
+                  { title: 'Q4 All-Hands — Agenda and Zoom Link', dept: 'Leadership', views: '1,102', badge: 'Pinned', bc: C.primary },
+                  { title: 'Open Enrollment Closes Nov 15', dept: 'HR · Benefits', views: '987', badge: 'Action Required', bc: C.warning },
+                  { title: 'New IT Security Policy — Please Read', dept: 'IT', views: '743', badge: 'Ack Required', bc: C.error },
+                ].map((post) => (
+                  <div key={post.title} className="flex items-start justify-between p-3 rounded-xl border"
+                    style={{ backgroundColor: C.appBg, borderColor: C.border }}>
+                    <div className="flex-1 min-w-0 mr-3">
+                      <div className="text-sm font-medium truncate" style={{ color: C.navy }}>{post.title}</div>
+                      <div className="text-xs mt-0.5" style={{ color: C.muted }}>{post.dept} · {post.views} views</div>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold flex-shrink-0"
+                      style={{ backgroundColor: post.bc + '18', color: post.bc }}>{post.badge}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              <Badge label="Intranet Messaging" />
+              <h2 className="text-3xl font-bold mt-4 mb-3" style={{ color: C.navy }}>
+                A company feed employees actually check
+              </h2>
+              <p className="text-base mb-5 leading-relaxed" style={{ color: C.slate }}>
+                Post announcements directly to your company intranet — pinned, categorized, and searchable. Employees see what matters most, and you see who's engaged.
+              </p>
+              <ul className="space-y-2.5">
+                {['Pinned and prioritized announcement feed', 'Department and role-based targeting', 'Post alongside email for maximum reach', 'View counts and engagement tracking', 'Acknowledgment-required posts with audit trail'].map((b) => (
+                  <li key={b} className="flex items-center gap-2.5 text-sm" style={{ color: C.slate }}>
+                    <CheckSquare className="w-4 h-4 flex-shrink-0" style={{ color: C.primary }} />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* SMS */}
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <Badge label="SMS" />
+              <h2 className="text-3xl font-bold mt-4 mb-3" style={{ color: C.navy }}>
+                Reach every employee — even without email
+              </h2>
+              <p className="text-base mb-5 leading-relaxed" style={{ color: C.slate }}>
+                For urgent alerts, shift changes, and time-sensitive notices, SMS cuts through the noise. 99%+ delivery rates, opt-out compliance, and no app required.
+              </p>
+              <ul className="space-y-2.5">
+                {['Broadcast SMS to all employees or segments', '99%+ delivery rate with carrier-grade infrastructure', 'Opt-out management and compliance tracking', 'Urgent alert mode for time-sensitive notices', 'Combine with email for multi-channel reach'].map((b) => (
+                  <li key={b} className="flex items-center gap-2.5 text-sm" style={{ color: C.slate }}>
+                    <CheckSquare className="w-4 h-4 flex-shrink-0" style={{ color: C.primary }} />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* SMS snippet */}
+            <div className="rounded-2xl overflow-hidden border shadow-lg" style={{ borderColor: C.border }}>
+              <div className="px-4 py-2.5 border-b flex items-center gap-2" style={{ borderColor: C.border, backgroundColor: C.card }}>
+                <AlertCircle className="w-4 h-4" style={{ color: C.warning }} />
+                <span className="text-sm font-semibold" style={{ color: C.navy }}>Urgent Alert — All Employees</span>
+              </div>
+              <div className="p-4" style={{ backgroundColor: C.card }}>
+                <div className="rounded-xl p-3 mb-4 border" style={{ backgroundColor: '#FFF8EC', borderColor: '#F5D99A' }}>
+                  <div className="text-xs font-semibold mb-1" style={{ color: C.warning }}>Urgent — All Employees (1,240)</div>
+                  <div className="text-sm" style={{ color: C.navy }}>REMINDER: Open Enrollment closes Friday at 5pm. Complete your selections at benefits.company.com</div>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { label: 'Delivered', value: '1,237', color: C.success },
+                    { label: 'Delivery Rate', value: '99.8%', color: C.success },
+                    { label: 'Opt-Outs', value: '2', color: C.muted },
+                  ].map((m) => (
+                    <div key={m.label} className="text-center p-3 rounded-xl" style={{ backgroundColor: C.appBg }}>
+                      <div className="text-lg font-bold" style={{ color: m.color }}>{m.value}</div>
+                      <div className="text-xs mt-0.5" style={{ color: C.muted }}>{m.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Acknowledgment deep-dive ── */}
+      <section className="py-20 border-t" style={{ borderColor: C.border, backgroundColor: C.card }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            {/* Ack snippet */}
+            <div className="rounded-2xl overflow-hidden border shadow-lg" style={{ borderColor: C.border }}>
+              <div className="px-4 py-2.5 border-b flex items-center gap-2" style={{ borderColor: C.border, backgroundColor: C.card }}>
+                <CheckSquare className="w-4 h-4" style={{ color: C.primary }} />
+                <span className="text-sm font-semibold" style={{ color: C.navy }}>Acknowledgment Tracker</span>
+              </div>
+              <div className="p-4" style={{ backgroundColor: C.card }}>
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-sm font-medium" style={{ color: C.navy }}>IT Security Policy Update</span>
+                    <span className="text-sm font-bold" style={{ color: C.success }}>76%</span>
+                  </div>
+                  <div className="h-2.5 rounded-full mb-1.5" style={{ backgroundColor: C.border }}>
+                    <div className="h-2.5 rounded-full" style={{ width: '76%', backgroundColor: C.success }} />
+                  </div>
+                  <div className="text-xs" style={{ color: C.muted }}>942 of 1,240 confirmed · 298 pending · Auto-reminder sent</div>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { name: 'Sarah M.', dept: 'Engineering', ok: true,  time: '2 min ago' },
+                    { name: 'James T.', dept: 'HR',          ok: true,  time: '5 min ago' },
+                    { name: 'Priya K.', dept: 'Finance',     ok: false, time: 'Reminder sent' },
+                    { name: 'Marcus L.',dept: 'Sales',       ok: false, time: 'Reminder sent' },
+                  ].map((emp) => (
+                    <div key={emp.name} className="flex items-center justify-between py-2 border-t" style={{ borderColor: C.border }}>
+                      <div>
+                        <div className="text-sm font-medium" style={{ color: C.navy }}>{emp.name}</div>
+                        <div className="text-xs" style={{ color: C.muted }}>{emp.dept}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs font-semibold" style={{ color: emp.ok ? C.success : C.warning }}>
+                          {emp.ok ? 'Acknowledged' : 'Pending'}
+                        </div>
+                        <div className="text-xs" style={{ color: C.muted }}>{emp.time}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div>
+              <Badge label="Acknowledgment Tracking" />
+              <h2 className="text-3xl font-bold mt-4 mb-3" style={{ color: C.navy }}>
+                Know who read it. Prove it.
+              </h2>
+              <p className="text-base mb-5 leading-relaxed" style={{ color: C.slate }}>
+                For compliance notices, policy updates, and critical announcements, acknowledgment tracking gives you a timestamped record of who confirmed — and automatically follows up with those who haven't.
+              </p>
+              <ul className="space-y-2.5">
+                {['One-click employee acknowledgment', 'Real-time confirmation tracking per message', 'Automated reminders to non-responders', 'Compliance audit trail with timestamps', 'Export reports for HR and legal'].map((b) => (
+                  <li key={b} className="flex items-center gap-2.5 text-sm" style={{ color: C.slate }}>
+                    <CheckSquare className="w-4 h-4 flex-shrink-0" style={{ color: C.primary }} />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="py-20" style={{ backgroundColor: C.navy }}>
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">See every feature in action</h2>
+          <p className="text-lg mb-8" style={{ color: '#8BA3B8' }}>
+            Book a 30-minute demo and we'll walk you through email, intranet, SMS, and acknowledgment tracking with your own employee data.
+          </p>
+          <Link href="/demo"
+            className="inline-flex items-center gap-2 px-10 py-4 text-white text-lg font-semibold rounded-lg transition-opacity hover:opacity-90"
+            style={{ backgroundColor: C.primary }}>
+            Book a Demo
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+      </section>
 
       <Footer />
     </div>
